@@ -93,8 +93,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -107,8 +106,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -121,8 +119,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -135,8 +132,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -149,8 +145,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -174,8 +169,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -219,8 +213,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -269,8 +262,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -322,8 +314,7 @@
         }
       ],
       "stateMutability": "pure",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -342,8 +333,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -362,8 +352,7 @@
         }
       ],
       "stateMutability": "payable",
-      "type": "function",
-      "payable": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -402,8 +391,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     }
   ],
   "metadata": "{\"compiler\":{\"version\":\"0.8.20+commit.a1b79de6\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"string\",\"name\":\"city\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"cost\",\"type\":\"uint256\"}],\"name\":\"CarbonCreditRequested\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"string\",\"name\":\"city\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"sector\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"}],\"name\":\"EmissionDataAdded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"string\",\"name\":\"city\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"creditsUsed\",\"type\":\"uint256\"}],\"name\":\"RenewalProcessed\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"BASE_CREDIT_COST\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"CARBON_TO_TEMP_FACTOR\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"MAX_RENEWALS\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"RENEWAL_PERIOD\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"TEMP_REDUCTION_PER_CREDIT\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"city\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"sector\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"aqi\",\"type\":\"uint256\"}],\"name\":\"addEmissionData\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"city\",\"type\":\"string\"}],\"name\":\"calculateRequiredCredits\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"emissions\",\"type\":\"uint256\"}],\"name\":\"calculateTemperature\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"cityEmissionTimestamps\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"cityEmissions\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"timestamp\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"sector\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"value\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"airQualityIndex\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"temperature\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"name\":\"cityMetrics\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"totalEmissions\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"averageTemperature\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"averageAQI\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"lastUpdateTime\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"carbonCreditsRequested\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"renewalCount\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"lastRenewalTime\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"city\",\"type\":\"string\"}],\"name\":\"getCityMetrics\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"totalEmissions\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"avgTemp\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"avgAQI\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"creditsRequested\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"renewals\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"city\",\"type\":\"string\"}],\"name\":\"requestCarbonCredits\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"payable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/climate/CityEmissionsContract.sol\":\"CityEmissionsContract\"},\"evmVersion\":\"shanghai\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[]},\"sources\":{\"@openzeppelin/contracts/utils/math/SafeMath.sol\":{\"keccak256\":\"0x58b21219689909c4f8339af00813760337f7e2e7f169a97fe49e2896dcfb3b9a\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://ef8e012e946dec20e59f2d4446f4b44bb098f3fa8bac103b1b5112fff777447b\",\"dweb:/ipfs/QmVTooKWcLkJ9W68yNX4MgdrbAKiAXwuRN9A7f4NkdcdtQ\"]},\"project:/contracts/climate/CityEmissionsContract.sol\":{\"keccak256\":\"0x310876d3aa8928a591783fc7572c0cc2e538fa91568157a6079791bc49b3e26f\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://377b762939d431f9a4c0f50bfa05853c1a3dbedd8f63d5d0591b5799053af2f6\",\"dweb:/ipfs/QmfQKRDDqfaCi4p6zrKcUNawh7JTwvbSsdikaPhWut6mKQ\"]}},\"version\":1}",
@@ -8105,7 +8093,7 @@
   "sourceMap": "116:5508:24:-:0;;;;;;;;;;;;;;;;;;;",
   "deployedSourceMap": "116:5508:24:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1153:58;;;;;;;;;;-1:-1:-1;1153:58:24;;;;;:::i;:::-;;:::i;:::-;;;1411:25:41;;;1399:2;1384:18;1153:58:24;;;;;;;;940:51;;;;;;;;;;;;988:3;940:51;;802:53;;;;;;;;;;;;854:1;802:53;;884:50;;;;;;;;;;;;927:7;884:50;;2308:258;;;;;;;;;;-1:-1:-1;2308:258:24;;;;;:::i;:::-;;:::i;1503:730::-;;;;;;;;;;-1:-1:-1;1503:730:24;;;;;:::i;:::-;;:::i;:::-;;3407:526;;;;;;;;;;-1:-1:-1;3407:526:24;;;;;:::i;:::-;;:::i;1098:49::-;;;;;;;;;;-1:-1:-1;1098:49:24;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;3028:25:41;;;3084:2;3069:18;;3062:34;;;;3112:18;;;3105:34;;;;3170:2;3155:18;;3148:34;;;;3213:3;3198:19;;3191:35;3257:3;3242:19;;3235:35;3301:3;3286:19;;3279:35;3015:3;3000:19;1098:49:24;2713:607:41;5131:491:24;;;;;;;;;;-1:-1:-1;5131:491:24;;;;;:::i;:::-;;:::i;:::-;;;;3584:25:41;;;3640:2;3625:18;;3618:34;;;;3668:18;;;3661:34;;;;3726:2;3711:18;;3704:34;3769:3;3754:19;;3747:35;3571:3;3556:19;5131:491:24;3325:463:41;3990:1111:24;;;;;;:::i;:::-;;:::i;725:41::-;;;;;;;;;;;;764:2;725:41;;671:48;;;;;;;;;;;;712:7;671:48;;1020:72;;;;;;;;;;-1:-1:-1;1020:72:24;;;;;:::i;:::-;;:::i;:::-;;;;;;;;;;;:::i;1153:58::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o;2308:258::-;2378:7;2476:4;2509:50;2522:36;:9;988:3;2522:13;:36::i;:::-;2509:8;;:12;:50::i;:::-;2502:57;2308:258;-1:-1:-1;;;2308:258:24:o;1503:730::-;1755:19;1777:27;1798:5;1777:20;:27::i;:::-;1755:49;;1856:184;;;;;;;;1894:9;1856:184;;;;1925:6;1856:184;;;;1952:5;1856:184;;;;1988:3;1856:184;;;;2018:11;1856:184;;;1823:13;1837:4;1823:19;;;;;;:::i;:::-;;;;;;;;;;;;;;;;:30;;;;;;;;:217;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;2051:22;2074:4;2051:28;;;;;;:::i;:::-;;;;;;;;;;;;;;;:44;;;;;;;-1:-1:-1;2051:44:24;;;;;;;;;;2105:48;2123:4;2129:5;2136:3;2141:11;2105:17;:48::i;:::-;2177:49;2195:4;2201:9;2212:6;2220:5;2177:49;;;;;;;;;:::i;:::-;;;;;;;;1672:561;1503:730;;;;;:::o;3407:526::-;3482:7;3501:27;3531:11;3543:4;3531:17;;;;;;:::i;:::-;;;;;;;;;;;;;3501:47;;3591:1;3566:7;:22;;;:26;3558:55;;;;-1:-1:-1;;;3558:55:24;;8453:2:41;3558:55:24;;;8435:21:41;8492:2;8472:18;;;8465:30;-1:-1:-1;;;8511:18:41;;;8504:46;8567:18;;3558:55:24;;;;;;;;;3748:26;;;;3718:4;;3748:40;-1:-1:-1;3744:54:24;;-1:-1:-1;3797:1:24;;3407:526;-1:-1:-1;;;3407:526:24:o;3744:54::-;3828:26;;;;3809:16;;3828:42;;3859:10;3828:30;:42::i;:::-;3809:61;-1:-1:-1;3887:39:24;3809:61;854:1;3887:12;:39::i;:::-;3880:46;3407:526;-1:-1:-1;;;;;3407:526:24:o;5131:491::-;5207:22;5239:15;5264:14;5288:24;5322:16;5355:27;5385:11;5397:4;5385:17;;;;;;:::i;:::-;;;;;;;;;;;;;;5433:22;;5469:26;;;;5509:18;;;;5541:30;;;;5585:20;;;;;5433:22;;5469:26;;-1:-1:-1;5509:18:24;-1:-1:-1;5541:30:24;;-1:-1:-1;5585:20:24;-1:-1:-1;5131:491:24;-1:-1:-1;;;5131:491:24:o;3990:1111::-;4066:7;4085:27;4115:11;4127:4;4115:17;;;;;;:::i;:::-;;;;;;;;;;;;;4085:47;;712:7;4150:44;4170:7;:23;;;4150:15;:19;;:44;;;;:::i;:::-;:62;;4142:101;;;;-1:-1:-1;;;4142:101:24;;8798:2:41;4142:101:24;;;8780:21:41;8837:2;8817:18;;;8810:30;8876:28;8856:18;;;8849:56;8922:18;;4142:101:24;8596:350:41;4142:101:24;764:2;4261:7;:20;;;:35;4253:68;;;;-1:-1:-1;;;4253:68:24;;9153:2:41;4253:68:24;;;9135:21:41;9192:2;9172:18;;;9165:30;-1:-1:-1;;;9211:18:41;;;9204:50;9271:18;;4253:68:24;8951:344:41;4253:68:24;4332:23;4358:30;4383:4;4358:24;:30::i;:::-;4332:56;-1:-1:-1;4398:12:24;4413:37;4332:56;927:7;4413:19;:37::i;:::-;4398:52;;4481:4;4468:9;:17;;4460:50;;;;-1:-1:-1;;;4460:50:24;;9502:2:41;4460:50:24;;;9484:21:41;9541:2;9521:18;;;9514:30;-1:-1:-1;;;9560:18:41;;;9553:50;9620:18;;4460:50:24;9300:344:41;4460:50:24;4554:30;;;;:51;;4589:15;4554:34;:51::i;:::-;4521:30;;;:84;4638:20;;;;:27;;4663:1;4638:24;:27::i;:::-;4615:20;;;:50;4701:15;4675:23;;;:41;-1:-1:-1;4794:46:24;:15;854:1;4794:19;:46::i;:::-;4879:26;;;;4770:70;;-1:-1:-1;4879:45:24;;4770:70;4879:30;:45::i;:::-;4850:26;;;:74;4940:50;;;;;;4962:4;;4968:15;;4985:4;;4940:50;:::i;:::-;;;;;;;;5005:56;5022:4;5028:15;5045;5005:56;;;;;;;;:::i;:::-;;;;;;;;-1:-1:-1;5079:15:24;;3990:1111;-1:-1:-1;;;;3990:1111:24:o;1020:72::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o;3465:96:15:-;3523:7;3549:5;3553:1;3549;:5;:::i;:::-;3542:12;;3465:96;;;;;:::o;2755:::-;2813:7;2839:5;2843:1;2839;:5;:::i;2599:737:24:-;2758:27;2788:11;2800:4;2788:17;;;;;;:::i;:::-;;;;;;;;;;;;;2758:47;;2828:7;:22;;;2854:1;2828:27;2824:447;;2871:37;;;2922:26;;;:36;;;2972:18;;;:27;;;2824:447;;;3055:22;;:40;;3082:12;3055:26;:40::i;:::-;3030:65;;3139:26;;;;3138:48;;3184:1;;3139:39;;3170:7;3139:30;:39::i;:::-;3138:45;;:48::i;:::-;3109:26;;;:77;3258:1;3222:18;;;;3221:39;;3258:1;3222:30;;3245:6;3222:22;:30::i;3221:39::-;3200:18;;;:60;2824:447;3314:15;3289:22;;;;:40;-1:-1:-1;;;;2599:737:24:o;3122:96:15:-;3180:7;3206:5;3210:1;3206;:5;:::i;3850:96::-;3908:7;3934:5;3938:1;3934;:5;:::i;14:127:41:-;75:10;70:3;66:20;63:1;56:31;106:4;103:1;96:15;130:4;127:1;120:15;146:719;189:5;242:3;235:4;227:6;223:17;219:27;209:55;;260:1;257;250:12;209:55;296:6;283:20;322:18;359:2;355;352:10;349:36;;;365:18;;:::i;:::-;440:2;434:9;408:2;494:13;;-1:-1:-1;;490:22:41;;;514:2;486:31;482:40;470:53;;;538:18;;;558:22;;;535:46;532:72;;;584:18;;:::i;:::-;624:10;620:2;613:22;659:2;651:6;644:18;705:3;698:4;693:2;685:6;681:15;677:26;674:35;671:55;;;722:1;719;712:12;671:55;786:2;779:4;771:6;767:17;760:4;752:6;748:17;735:54;833:1;826:4;821:2;813:6;809:15;805:26;798:37;853:6;844:15;;;;;;146:719;;;;:::o;870:390::-;948:6;956;1009:2;997:9;988:7;984:23;980:32;977:52;;;1025:1;1022;1015:12;977:52;1065:9;1052:23;1098:18;1090:6;1087:30;1084:50;;;1130:1;1127;1120:12;1084:50;1153;1195:7;1186:6;1175:9;1171:22;1153:50;:::i;:::-;1143:60;1250:2;1235:18;;;;1222:32;;-1:-1:-1;;;;870:390:41:o;1447:180::-;1506:6;1559:2;1547:9;1538:7;1534:23;1530:32;1527:52;;;1575:1;1572;1565:12;1527:52;-1:-1:-1;1598:23:41;;1447:180;-1:-1:-1;1447:180:41:o;1632:749::-;1747:6;1755;1763;1771;1779;1832:3;1820:9;1811:7;1807:23;1803:33;1800:53;;;1849:1;1846;1839:12;1800:53;1889:9;1876:23;1918:18;1959:2;1951:6;1948:14;1945:34;;;1975:1;1972;1965:12;1945:34;1998:50;2040:7;2031:6;2020:9;2016:22;1998:50;:::i;:::-;1988:60;;2095:2;2084:9;2080:18;2067:32;2057:42;;2152:2;2141:9;2137:18;2124:32;2108:48;;2181:2;2171:8;2168:16;2165:36;;;2197:1;2194;2187:12;2165:36;;2220:52;2264:7;2253:8;2242:9;2238:24;2220:52;:::i;:::-;1632:749;;;;-1:-1:-1;2210:62:41;;2319:2;2304:18;;2291:32;;-1:-1:-1;2370:3:41;2355:19;2342:33;;1632:749;-1:-1:-1;;;1632:749:41:o;2386:322::-;2455:6;2508:2;2496:9;2487:7;2483:23;2479:32;2476:52;;;2524:1;2521;2514:12;2476:52;2564:9;2551:23;2597:18;2589:6;2586:30;2583:50;;;2629:1;2626;2619:12;2583:50;2652;2694:7;2685:6;2674:9;2670:22;2652:50;:::i;:::-;2642:60;2386:322;-1:-1:-1;;;;2386:322:41:o;3793:250::-;3878:1;3888:113;3902:6;3899:1;3896:13;3888:113;;;3978:11;;;3972:18;3959:11;;;3952:39;3924:2;3917:10;3888:113;;;-1:-1:-1;;4035:1:41;4017:16;;4010:27;3793:250::o;4048:271::-;4090:3;4128:5;4122:12;4155:6;4150:3;4143:19;4171:76;4240:6;4233:4;4228:3;4224:14;4217:4;4210:5;4206:16;4171:76;:::i;:::-;4301:2;4280:15;-1:-1:-1;;4276:29:41;4267:39;;;;4308:4;4263:50;;4048:271;-1:-1:-1;;4048:271:41:o;4324:507::-;4585:6;4574:9;4567:25;4628:3;4623:2;4612:9;4608:18;4601:31;4548:4;4649:46;4690:3;4679:9;4675:19;4667:6;4649:46;:::i;:::-;4726:2;4711:18;;4704:34;;;;-1:-1:-1;4769:2:41;4754:18;;4747:34;;;;4812:3;4797:19;;;4790:35;4641:54;4324:507;-1:-1:-1;;4324:507:41:o;4836:289::-;4967:3;5005:6;4999:13;5021:66;5080:6;5075:3;5068:4;5060:6;5056:17;5021:66;:::i;:::-;5103:16;;;;;4836:289;-1:-1:-1;;4836:289:41:o;5130:380::-;5209:1;5205:12;;;;5252;;;5273:61;;5327:4;5319:6;5315:17;5305:27;;5273:61;5380:2;5372:6;5369:14;5349:18;5346:38;5343:161;;5426:10;5421:3;5417:20;5414:1;5407:31;5461:4;5458:1;5451:15;5489:4;5486:1;5479:15;5343:161;;5130:380;;;:::o;5641:545::-;5743:2;5738:3;5735:11;5732:448;;;5779:1;5804:5;5800:2;5793:17;5849:4;5845:2;5835:19;5919:2;5907:10;5903:19;5900:1;5896:27;5890:4;5886:38;5955:4;5943:10;5940:20;5937:47;;;-1:-1:-1;5978:4:41;5937:47;6033:2;6028:3;6024:12;6021:1;6017:20;6011:4;6007:31;5997:41;;6088:82;6106:2;6099:5;6096:13;6088:82;;;6151:17;;;6132:1;6121:13;6088:82;;;6092:3;;;5732:448;5641:545;;;:::o;6362:1352::-;6488:3;6482:10;6515:18;6507:6;6504:30;6501:56;;;6537:18;;:::i;:::-;6566:97;6656:6;6616:38;6648:4;6642:11;6616:38;:::i;:::-;6610:4;6566:97;:::i;:::-;6718:4;;6782:2;6771:14;;6799:1;6794:663;;;;7501:1;7518:6;7515:89;;;-1:-1:-1;7570:19:41;;;7564:26;7515:89;-1:-1:-1;;6319:1:41;6315:11;;;6311:24;6307:29;6297:40;6343:1;6339:11;;;6294:57;7617:81;;6764:944;;6794:663;5588:1;5581:14;;;5625:4;5612:18;;-1:-1:-1;;6830:20:41;;;6948:236;6962:7;6959:1;6956:14;6948:236;;;7051:19;;;7045:26;7030:42;;7143:27;;;;7111:1;7099:14;;;;6978:19;;6948:236;;;6952:3;7212:6;7203:7;7200:19;7197:201;;;7273:19;;;7267:26;-1:-1:-1;;7356:1:41;7352:14;;;7368:3;7348:24;7344:37;7340:42;7325:58;7310:74;;7197:201;-1:-1:-1;;;;;7444:1:41;7428:14;;;7424:22;7411:36;;-1:-1:-1;6362:1352:41:o;7719:527::-;7972:3;7961:9;7954:22;7935:4;7999:46;8040:3;8029:9;8025:19;8017:6;7999:46;:::i;:::-;8081:6;8076:2;8065:9;8061:18;8054:34;8136:9;8128:6;8124:22;8119:2;8108:9;8104:18;8097:50;8164:33;8190:6;8182;8164:33;:::i;:::-;8156:41;;;8233:6;8228:2;8217:9;8213:18;8206:34;7719:527;;;;;;;:::o;9649:362::-;9854:2;9843:9;9836:21;9817:4;9874:45;9915:2;9904:9;9900:18;9892:6;9874:45;:::i;:::-;9950:2;9935:18;;9928:34;;;;-1:-1:-1;9993:2:41;9978:18;9971:34;9866:53;9649:362;-1:-1:-1;9649:362:41:o;10016:127::-;10077:10;10072:3;10068:20;10065:1;10058:31;10108:4;10105:1;10098:15;10132:4;10129:1;10122:15;10148:168;10221:9;;;10252;;10269:15;;;10263:22;;10249:37;10239:71;;10290:18;;:::i;10321:125::-;10386:9;;;10407:10;;;10404:36;;;10420:18;;:::i;10451:128::-;10518:9;;;10539:11;;;10536:37;;;10553:18;;:::i;10584:217::-;10624:1;10650;10640:132;;10694:10;10689:3;10685:20;10682:1;10675:31;10729:4;10726:1;10719:15;10757:4;10754:1;10747:15;10640:132;-1:-1:-1;10786:9:41;;10584:217::o",
   "source": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\nimport \"@openzeppelin/contracts/utils/math/SafeMath.sol\";\n\ncontract CityEmissionsContract {\n    using SafeMath for uint256;\n\n    struct EmissionData {\n        uint256 timestamp;\n        string sector;\n        uint256 value;\n        uint256 airQualityIndex;\n        uint256 temperature;    // in Celsius * 100 for precision\n    }\n\n    struct CityMetrics {\n        uint256 totalEmissions;\n        uint256 averageTemperature;\n        uint256 averageAQI;\n        uint256 lastUpdateTime;\n        uint256 carbonCreditsRequested;\n        uint256 renewalCount;\n        uint256 lastRenewalTime;\n    }\n\n    // Constants\n    uint256 public constant RENEWAL_PERIOD = 30 days;\n    uint256 public constant MAX_RENEWALS = 12;  // Maximum renewals per year\n    uint256 public constant TEMP_REDUCTION_PER_CREDIT = 1;  // 0.01°C per credit\n    uint256 public constant BASE_CREDIT_COST = 1 ether;\n    uint256 public constant CARBON_TO_TEMP_FACTOR = 100;  // Conversion factor\n\n    mapping(string => mapping(uint256 => EmissionData)) public cityEmissions;\n    mapping(string => CityMetrics) public cityMetrics;\n    mapping(string => uint256[]) public cityEmissionTimestamps;\n\n    event EmissionDataAdded(string city, uint256 timestamp, string sector, uint256 value);\n    event CarbonCreditRequested(string city, uint256 amount, uint256 cost);\n    event RenewalProcessed(string city, uint256 timestamp, uint256 creditsUsed);\n\n    // Add emission data for a city\n    function addEmissionData(\n        string memory city,\n        uint256 timestamp,\n        string memory sector,\n        uint256 value,\n        uint256 aqi\n    ) external {\n        // Calculate temperature based on emissions (simplified formula)\n        uint256 temperature = calculateTemperature(value);\n        \n        cityEmissions[city][timestamp] = EmissionData({\n            timestamp: timestamp,\n            sector: sector,\n            value: value,\n            airQualityIndex: aqi,\n            temperature: temperature\n        });\n\n        cityEmissionTimestamps[city].push(timestamp);\n        updateCityMetrics(city, value, aqi, temperature);\n        \n        emit EmissionDataAdded(city, timestamp, sector, value);\n    }\n\n    // Calculate temperature from emissions using simplified formula\n    function calculateTemperature(uint256 emissions) public pure returns (uint256) {\n        // T = T_base + (emissions * CARBON_TO_TEMP_FACTOR)\n        uint256 baseTemp = 1500; // 15.00°C\n        return baseTemp.add(emissions.mul(CARBON_TO_TEMP_FACTOR));\n    }\n\n    // Update city metrics\n    function updateCityMetrics(\n        string memory city,\n        uint256 newEmissions,\n        uint256 newAQI,\n        uint256 newTemp\n    ) internal {\n        CityMetrics storage metrics = cityMetrics[city];\n        \n        if (metrics.lastUpdateTime == 0) {\n            metrics.totalEmissions = newEmissions;\n            metrics.averageTemperature = newTemp;\n            metrics.averageAQI = newAQI;\n        } else {\n            metrics.totalEmissions = metrics.totalEmissions.add(newEmissions);\n            metrics.averageTemperature = (metrics.averageTemperature.add(newTemp)).div(2);\n            metrics.averageAQI = (metrics.averageAQI.add(newAQI)).div(2);\n        }\n        \n        metrics.lastUpdateTime = block.timestamp;\n    }\n\n    // Calculate required carbon credits based on renewal theory\n    function calculateRequiredCredits(string memory city) public view returns (uint256) {\n        CityMetrics storage metrics = cityMetrics[city];\n        require(metrics.lastUpdateTime > 0, \"No data for city\");\n\n        // Calculate based on temperature difference from target (20°C)\n        uint256 targetTemp = 2000; // 20.00°C\n        if (metrics.averageTemperature <= targetTemp) return 0;\n\n        uint256 tempDiff = metrics.averageTemperature.sub(targetTemp);\n        return tempDiff.div(TEMP_REDUCTION_PER_CREDIT);\n    }\n\n    // Request carbon credits using renewal theory\n    function requestCarbonCredits(string memory city) external payable returns (uint256) {\n        CityMetrics storage metrics = cityMetrics[city];\n        require(block.timestamp.sub(metrics.lastRenewalTime) >= RENEWAL_PERIOD, \"Renewal period not elapsed\");\n        require(metrics.renewalCount < MAX_RENEWALS, \"Max renewals reached\");\n\n        uint256 requiredCredits = calculateRequiredCredits(city);\n        uint256 cost = requiredCredits.mul(BASE_CREDIT_COST);\n        require(msg.value >= cost, \"Insufficient payment\");\n\n        metrics.carbonCreditsRequested = metrics.carbonCreditsRequested.add(requiredCredits);\n        metrics.renewalCount = metrics.renewalCount.add(1);\n        metrics.lastRenewalTime = block.timestamp;\n\n        // Calculate temperature reduction\n        uint256 tempReduction = requiredCredits.mul(TEMP_REDUCTION_PER_CREDIT);\n        metrics.averageTemperature = metrics.averageTemperature.sub(tempReduction);\n\n        emit CarbonCreditRequested(city, requiredCredits, cost);\n        emit RenewalProcessed(city, block.timestamp, requiredCredits);\n\n        return requiredCredits;\n    }\n\n    // Get city metrics\n    function getCityMetrics(string memory city) external view returns (\n        uint256 totalEmissions,\n        uint256 avgTemp,\n        uint256 avgAQI,\n        uint256 creditsRequested,\n        uint256 renewals\n    ) {\n        CityMetrics storage metrics = cityMetrics[city];\n        return (\n            metrics.totalEmissions,\n            metrics.averageTemperature,\n            metrics.averageAQI,\n            metrics.carbonCreditsRequested,\n            metrics.renewalCount\n        );\n    }\n}\n",
-  "sourcePath": "C:\\Users\\Bonsu\\Documents\\CLEANER PRODUCTION\\renewalclimateproject\\contracts\\climate\\CityEmissionsContract.sol",
+  "sourcePath": "C:\\Users\\Bonsu\\Documents\\CLEANER PRODUCTION\\renewalclimateproject\\ClimateProjectFull\\contracts\\climate\\CityEmissionsContract.sol",
   "ast": {
     "absolutePath": "project:/contracts/climate/CityEmissionsContract.sol",
     "exportedSymbols": {
@@ -14060,8 +14048,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.16",
-  "updatedAt": "2025-02-18T10:12:12.991Z",
-  "networkType": "ethereum",
+  "updatedAt": "2025-02-18T18:18:20.767Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

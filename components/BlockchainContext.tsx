@@ -44,7 +44,7 @@ interface BlockchainContextType {
 }
 
 // Existing type definitions
-type ContractType = (Contract & { 
+type ContractType = (Contract<any> & { 
   options?: { 
     address?: string 
   }; 
@@ -154,9 +154,9 @@ export const BlockchainProvider: React.FC<PropsWithChildren> = ({ children }) =>
       setAccounts(accs);
       setBlockchainService(service);
       setNetworkInfo({
-        chainId: await web3Instance.eth.getChainId(),
+        chainId: Number(await web3Instance.eth.getChainId().toString()), // Explicit conversion
         name: networkName || 'Unknown',
-        type: 'testnet' // You might want to determine this dynamically
+        type: 'testnet'
       });
 
       Logger.info('MetaMask connected successfully', {

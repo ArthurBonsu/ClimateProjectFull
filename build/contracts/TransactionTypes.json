@@ -10,7 +10,7 @@
   "sourceMap": "58:799:40:-:0;;;;;;;;;;;;;;;-1:-1:-1;;;58:799:40;;;;;;;;;;;;;;;;;",
   "deployedSourceMap": "58:799:40:-:0;;;;;;;;",
   "source": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.17;\n\nlibrary TransactionTypes {\n    struct SpeculativeTx {\n        bytes32 id;\n        address sender;\n        address receiver;\n        uint256 anticipatedTime;\n        bytes32 dataHash;\n        bool isAssetTransfer;\n        uint256 interpolationTime;\n        bytes rbfParams;\n        mapping(bytes32 => bool) validationProofs;\n    }\n\n    struct ConfirmableTx {\n        bytes32 id;\n        address sender;\n        address receiver;\n        uint256 confirmationTime;\n        bytes32 dataHash;\n        bool isAssetTransfer;\n        bytes32 speculativeTxId;\n        mapping(bytes32 => bool) zkProofs;\n    }\n\n    struct Channel {\n        bytes32 id;\n        address sourceBridge;\n        address targetBridge;\n        uint256 creationTime;\n        bool isActive;\n        uint256 confidenceThreshold;\n    }\n}\n",
-  "sourcePath": "C:\\Users\\Bonsu\\Documents\\CLEANER PRODUCTION\\renewalclimateproject\\library\\TransactionTypes.sol",
+  "sourcePath": "C:\\Users\\Bonsu\\Documents\\CLEANER PRODUCTION\\renewalclimateproject\\ClimateProjectFull\\library\\TransactionTypes.sol",
   "ast": {
     "absolutePath": "project:/library/TransactionTypes.sol",
     "exportedSymbols": {
@@ -772,7 +772,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.16",
-  "updatedAt": "2025-02-18T10:12:04.222Z",
+  "updatedAt": "2025-02-18T18:18:20.936Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

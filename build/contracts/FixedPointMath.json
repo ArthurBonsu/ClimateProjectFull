@@ -147,7 +147,7 @@
   "sourceMap": "145:1386:39:-:0;;;;;;;;;;;;;;;-1:-1:-1;;;145:1386:39;;;;;;;;;;;;;;;;;",
   "deployedSourceMap": "145:1386:39:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;220:47;;248:19;220:47;;;;;168:25:41;;;156:2;141:18;220:47:39;;;;;;;174:40;;210:4;174:40;",
   "source": "// SPDX-License-Identifier: MIT\n pragma solidity ^0.8.0;\n/**\n * @title FixedPointMath\n * @dev Library for fixed-point arithmetic operations\n */\n\nlibrary FixedPointMath {\n    uint256 public constant PRECISION = 1e18;\n    uint256 public constant E = 2718281828459045235; // e * 1e18\n\n    function multiplyFixedPoint(uint256 a, uint256 b) internal pure returns (uint256) {\n        return (a * b) / PRECISION;\n    }\n\n    function addFixedPoint(uint256 a, uint256 b) internal pure returns (uint256) {\n        return a + b;\n    }\n\n    function exponentialDecay(uint256 x) internal pure returns (uint256) {\n        // Taylor series approximation of e^(-x)\n        // e^(-x) ≈ 1 - x + x²/2! - x³/3! + x⁴/4! - x⁵/5!\n        uint256 result = PRECISION; // 1\n        uint256 term = PRECISION;   // First term\n        \n        for (uint256 i = 1; i <= 5; i++) {\n            term = multiplyFixedPoint(term, x) / i;\n            if (i % 2 == 1) {\n                result = result > term ? result - term : 0;\n            } else {\n                result = addFixedPoint(result, term);\n            }\n        }\n        \n        return result;\n    }\n   function exponentialGrowth(uint256 x) internal pure returns (uint256) {\n        // Taylor series approximation of e^x\n        uint256 result = PRECISION;\n        uint256 term = PRECISION;\n        \n        for (uint256 i = 1; i <= 5; i++) {\n            term = multiplyFixedPoint(term, x) / i;\n            result = addFixedPoint(result, term);\n        }\n        \n        return result;\n    }\n}",
-  "sourcePath": "C:\\Users\\Bonsu\\Documents\\CLEANER PRODUCTION\\renewalclimateproject\\library\\FixedPointMath.sol",
+  "sourcePath": "C:\\Users\\Bonsu\\Documents\\CLEANER PRODUCTION\\renewalclimateproject\\ClimateProjectFull\\library\\FixedPointMath.sol",
   "ast": {
     "absolutePath": "project:/library/FixedPointMath.sol",
     "exportedSymbols": {
@@ -2051,7 +2051,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.16",
-  "updatedAt": "2025-02-18T10:12:04.221Z",
+  "updatedAt": "2025-02-18T18:18:20.935Z",
   "devdoc": {
     "details": "Library for fixed-point arithmetic operations",
     "kind": "dev",

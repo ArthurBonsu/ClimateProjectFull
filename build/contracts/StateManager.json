@@ -182,8 +182,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -196,8 +195,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -210,8 +208,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -224,8 +221,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -244,8 +240,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -264,8 +259,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -307,8 +301,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -378,8 +371,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -416,8 +408,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -451,8 +442,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -471,8 +461,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -7717,7 +7706,7 @@
   "sourceMap": "3872:1621:37:-:0;;;;;;;;;;;;-1:-1:-1;2546:42:37;2198:4:1;2577:10:37;2546;:42::i;:::-;3872:1621;;6937:110:1;7015:25;7026:4;7032:7;7015:10;:25::i;:::-;6937:110;;:::o;7587:233::-;3107:4;3130:12;;;;;;;;;;;-1:-1:-1;;;;;3130:29:1;;;;;;;;;;;;7665:149;;7708:6;:12;;;;;;;;;;;-1:-1:-1;;;;;7708:29:1;;;;;;;;;:36;;-1:-1:-1;;7708:36:1;7740:4;7708:36;;;7790:12;734:10:9;;655:96;7790:12:1;-1:-1:-1;;;;;7763:40:1;7781:7;-1:-1:-1;;;;;7763:40:1;7775:4;7763:40;;;;;;;;;;7587:233;;:::o;3872:1621:37:-;;;;;;;",
   "deployedSourceMap": "3872:1621:37:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;2732:202:1;;;;;;:::i;:::-;;:::i;:::-;;;470:14:41;;463:22;445:41;;433:2;418:18;2732:202:1;;;;;;;;2275:49:37;;2322:2;2275:49;;;;;643:25:41;;;631:2;616:18;2275:49:37;497:177:41;2086:70:37;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1089:25:41;;;1145:2;1130:18;;1123:34;;;;1173:18;;;1166:34;1243:14;1236:22;1231:2;1216:18;;1209:50;1076:3;1061:19;2086:70:37;864:401:41;4504:129:1;;;;;;:::i;:::-;4578:7;4604:12;;;;;;;;;;:22;;;;4504:129;3984:62:37;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;4929:145:1;;;;;;:::i;:::-;;:::i;:::-;;6038:214;;;;;;:::i;:::-;;:::i;2605:1175:37:-;;;;;;:::i;:::-;;:::i;3021:145:1:-;;;;;;:::i;:::-;;:::i;2153:49::-;;2198:4;2153:49;;2162:50:37;;;;;;:::i;:::-;;;;;;;;;;;;;;4313:696;;;;;;:::i;:::-;;:::i;2007:68::-;;2048:27;2007:68;;4052:46;;;;;;:::i;:::-;;;;;;;;;;;;;;2223;;2259:10;2223:46;;5354:147:1;;;;;;:::i;:::-;;:::i;2732:202::-;2817:4;-1:-1:-1;;;;;;2840:47:1;;-1:-1:-1;;;2840:47:1;;:87;;-1:-1:-1;;;;;;;;;;937:40:12;;;2891:36:1;2833:94;2732:202;-1:-1:-1;;2732:202:1:o;4929:145::-;4578:7;4604:12;;;;;;;;;;:22;;;2631:16;2642:4;2631:10;:16::i;:::-;5042:25:::1;5053:4;5059:7;5042:10;:25::i;:::-;4929:145:::0;;;:::o;6038:214::-;-1:-1:-1;;;;;6133:23:1;;734:10:9;6133:23:1;6125:83;;;;-1:-1:-1;;;6125:83:1;;5198:2:41;6125:83:1;;;5180:21:41;5237:2;5217:18;;;5210:30;5276:34;5256:18;;;5249:62;-1:-1:-1;;;5327:18:41;;;5320:45;5382:19;;6125:83:1;;;;;;;;;6219:26;6231:4;6237:7;6219:11;:26::i;:::-;6038:214;;:::o;2605:1175:37:-;2709:35;2048:27;2733:10;2709:7;:35::i;:::-;2701:63;;;;-1:-1:-1;;;2701:63:37;;5614:2:41;2701:63:37;;;5596:21:41;5653:2;5633:18;;;5626:30;-1:-1:-1;;;5672:18:41;;;5665:45;5727:18;;2701:63:37;5412:339:41;2701:63:37;2783:50;2836:22;;;:16;:22;;;;;2877:26;;;;;;2876:27;2868:59;;;;-1:-1:-1;;;2868:59:37;;5958:2:41;2868:59:37;;;5940:21:41;5997:2;5977:18;;;5970:30;-1:-1:-1;;;6016:18:41;;;6009:49;6075:18;;2868:59:37;5756:343:41;2868:59:37;2978:10;2946:13;2962:27;;;:15;:27;;;;;;2259:10;3007:18;;;2999:49;;;;-1:-1:-1;;;2999:49:37;;6306:2:41;2999:49:37;;;6288:21:41;6345:2;6325:18;;;6318:30;-1:-1:-1;;;6364:18:41;;;6357:48;6422:18;;2999:49:37;6104:342:41;2999:49:37;3071:8;3067:77;;;3128:5;3095:15;:29;;;:38;;;;;;;:::i;:::-;;;;-1:-1:-1;;3067:77:37;3183:5;3153:15;:26;;;:35;;;;;;;:::i;:::-;;;;-1:-1:-1;;3230:10:37;3198:43;;;;:31;;;:43;;;;;;;;;:51;;;3273:44;;6887:51:41;;;6954:18;;6947:34;;;3293:4:37;;3273:44;;6860:18:41;3273:44:37;;;;;;;3388:26;;:30;3384:390;;3544:26;;3464:29;;;;3434:26;;3544;3464:35;;3496:3;3464:35;:::i;:::-;3463:107;;;;:::i;:::-;3434:136;;2322:2;3601:18;:42;3597:167;;3663:26;;;:33;;-1:-1:-1;;3663:33:37;3692:4;3663:33;;;;;;3719:30;;445:41:41;;;3738:4:37;;3719:30;;433:2:41;418:18;3719:30:37;;;;;;;3597:167;3420:354;3384:390;2691:1089;;2605:1175;;:::o;3021:145:1:-;3107:4;3130:12;;;;;;;;;;;-1:-1:-1;;;;;3130:29:1;;;;;;;;;;;;;;;3021:145::o;4313:696:37:-;2198:4:1;2631:16;2198:4;2631:10;:16::i;:::-;4480:37:37::1;4520:18:::0;;;:12:::1;:18;::::0;;;;4557:17:::1;::::0;::::1;::::0;::::1;;4556:18;4548:52;;;::::0;-1:-1:-1;;;4548:52:37;;7589:2:41;4548:52:37::1;::::0;::::1;7571:21:41::0;7628:2;7608:18;;;7601:30;-1:-1:-1;;;7647:18:41;;;7640:51;7708:18;;4548:52:37::1;7387:345:41::0;4548:52:37::1;5469:15:::0;;;;;;4619:18:::1;::::0;4674:17:::1;::::0;::::1;:30:::0;;;4714:38;;4619:45;;-1:-1:-1;4714:38:37::1;::::0;:21:::1;::::0;::::1;::::0;:38:::1;::::0;::::1;::::0;::::1;:::i;:::-;-1:-1:-1::0;4782:15:37::1;4762:17;::::0;::::1;:35:::0;4821:38:::1;::::0;643:25:41;;;4842:4:37;;4821:38:::1;::::0;631:2:41;616:18;4821:38:37::1;;;;;;;4883:9;4878:125;4902:14;:21;4898:1;:25;4878:125;;;4944:48;4956:14;4971:1;4956:17;;;;;;;;:::i;:::-;;;;;;;4975:4;4981:10;4944:11;:48::i;:::-;4925:3:::0;::::1;::::0;::::1;:::i;:::-;;;;4878:125;;;;4470:539;;4313:696:::0;;;;:::o;5354:147:1:-;4578:7;4604:12;;;;;;;;;;:22;;;2631:16;2642:4;2631:10;:16::i;:::-;5468:26:::1;5480:4;5486:7;5468:11;:26::i;3460:103::-:0;3526:30;3537:4;734:10:9;3526::1;:30::i;:::-;3460:103;:::o;7587:233::-;7670:22;7678:4;7684:7;7670;:22::i;:::-;7665:149;;7708:6;:12;;;;;;;;;;;-1:-1:-1;;;;;7708:29:1;;;;;;;;;:36;;-1:-1:-1;;7708:36:1;7740:4;7708:36;;;7790:12;734:10:9;;655:96;7790:12:1;-1:-1:-1;;;;;7763:40:1;7781:7;-1:-1:-1;;;;;7763:40:1;7775:4;7763:40;;;;;;;;;;7587:233;;:::o;7991:234::-;8074:22;8082:4;8088:7;8074;:22::i;:::-;8070:149;;;8144:5;8112:12;;;;;;;;;;;-1:-1:-1;;;;;8112:29:1;;;;;;;;;;:37;;-1:-1:-1;;8112:37:1;;;8168:40;734:10:9;;8112:12:1;;8168:40;;8144:5;8168:40;7991:234;;:::o;5019:332:37:-;5140:20;;;;:11;:20;;;;;;;;:33;;;5223:18;;;:12;:18;;;;;;5251:34;;;:25;;;:34;;;;;;:41;;-1:-1:-1;;5251:41:37;5288:4;5251:41;;;5316:28;5223:18;;5236:4;;5152:7;;5316:28;;;5130:221;5019:332;;;:::o;3844:479:1:-;3932:22;3940:4;3946:7;3932;:22::i;:::-;3927:390;;4115:28;4135:7;4115:19;:28::i;:::-;4214:38;4242:4;4249:2;4214:19;:38::i;:::-;4022:252;;;;;;;;;:::i;:::-;;;;-1:-1:-1;;4022:252:1;;;;;;;;;;-1:-1:-1;;;3970:336:1;;;;;;;:::i;2407:149:11:-;2465:13;2497:52;-1:-1:-1;;;;;2509:22:11;;343:2;1818:437;1893:13;1918:19;1950:10;1954:6;1950:1;:10;:::i;:::-;:14;;1963:1;1950:14;:::i;:::-;1940:25;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;1940:25:11;;1918:47;;-1:-1:-1;;;1975:6:11;1982:1;1975:9;;;;;;;;:::i;:::-;;;;:15;-1:-1:-1;;;;;1975:15:11;;;;;;;;;-1:-1:-1;;;2000:6:11;2007:1;2000:9;;;;;;;;:::i;:::-;;;;:15;-1:-1:-1;;;;;2000:15:11;;;;;;;;-1:-1:-1;2030:9:11;2042:10;2046:6;2042:1;:10;:::i;:::-;:14;;2055:1;2042:14;:::i;:::-;2030:26;;2025:128;2062:1;2058;:5;2025:128;;;-1:-1:-1;;;2105:5:11;2113:3;2105:11;2096:21;;;;;;;:::i;:::-;;;;2084:6;2091:1;2084:9;;;;;;;;:::i;:::-;;;;:33;-1:-1:-1;;;;;2084:33:11;;;;;;;;-1:-1:-1;2141:1:11;2131:11;;;;;2065:3;;;:::i;:::-;;;2025:128;;;-1:-1:-1;2170:10:11;;2162:55;;;;-1:-1:-1;;;2162:55:11;;9825:2:41;2162:55:11;;;9807:21:41;;;9844:18;;;9837:30;9903:34;9883:18;;;9876:62;9955:18;;2162:55:11;9623:356:41;2162:55:11;2241:6;1818:437;-1:-1:-1;;;1818:437:11:o;-1:-1:-1:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;:::o;:::-;;;;;;;;;;;;;;;14:286:41;72:6;125:2;113:9;104:7;100:23;96:32;93:52;;;141:1;138;131:12;93:52;167:23;;-1:-1:-1;;;;;;219:32:41;;209:43;;199:71;;266:1;263;256:12;679:180;738:6;791:2;779:9;770:7;766:23;762:32;759:52;;;807:1;804;797:12;759:52;-1:-1:-1;830:23:41;;679:180;-1:-1:-1;679:180:41:o;1858:173::-;1926:20;;-1:-1:-1;;;;;1975:31:41;;1965:42;;1955:70;;2021:1;2018;2011:12;1955:70;1858:173;;;:::o;2036:254::-;2104:6;2112;2165:2;2153:9;2144:7;2140:23;2136:32;2133:52;;;2181:1;2178;2171:12;2133:52;2217:9;2204:23;2194:33;;2246:38;2280:2;2269:9;2265:18;2246:38;:::i;:::-;2236:48;;2036:254;;;;;:::o;2295:341::-;2360:6;2368;2421:2;2409:9;2400:7;2396:23;2392:32;2389:52;;;2437:1;2434;2427:12;2389:52;2473:9;2460:23;2450:33;;2533:2;2522:9;2518:18;2505:32;2580:5;2573:13;2566:21;2559:5;2556:32;2546:60;;2602:1;2599;2592:12;2546:60;2625:5;2615:15;;;2295:341;;;;;:::o;2641:186::-;2700:6;2753:2;2741:9;2732:7;2728:23;2724:32;2721:52;;;2769:1;2766;2759:12;2721:52;2792:29;2811:9;2792:29;:::i;2832:127::-;2893:10;2888:3;2884:20;2881:1;2874:31;2924:4;2921:1;2914:15;2948:4;2945:1;2938:15;2964:275;3035:2;3029:9;3100:2;3081:13;;-1:-1:-1;;3077:27:41;3065:40;;3135:18;3120:34;;3156:22;;;3117:62;3114:88;;;3182:18;;:::i;:::-;3218:2;3211:22;2964:275;;-1:-1:-1;2964:275:41:o;3244:530::-;3286:5;3339:3;3332:4;3324:6;3320:17;3316:27;3306:55;;3357:1;3354;3347:12;3306:55;3393:6;3380:20;3419:18;3415:2;3412:26;3409:52;;;3441:18;;:::i;:::-;3485:55;3528:2;3509:13;;-1:-1:-1;;3505:27:41;3534:4;3501:38;3485:55;:::i;:::-;3565:2;3556:7;3549:19;3611:3;3604:4;3599:2;3591:6;3587:15;3583:26;3580:35;3577:55;;;3628:1;3625;3618:12;3577:55;3693:2;3686:4;3678:6;3674:17;3667:4;3658:7;3654:18;3641:55;3741:1;3716:16;;;3734:4;3712:27;3705:38;;;;3720:7;3244:530;-1:-1:-1;;;3244:530:41:o;3779:1212::-;3890:6;3898;3906;3959:2;3947:9;3938:7;3934:23;3930:32;3927:52;;;3975:1;3972;3965:12;3927:52;4011:9;3998:23;3988:33;;4040:2;4093;4082:9;4078:18;4065:32;4116:18;4157:2;4149:6;4146:14;4143:34;;;4173:1;4170;4163:12;4143:34;4211:6;4200:9;4196:22;4186:32;;4256:7;4249:4;4245:2;4241:13;4237:27;4227:55;;4278:1;4275;4268:12;4227:55;4314:2;4301:16;4336:2;4332;4329:10;4326:36;;;4342:18;;:::i;:::-;4388:2;4385:1;4381:10;4411:28;4435:2;4431;4427:11;4411:28;:::i;:::-;4473:15;;;4543:11;;;4539:20;;;4504:12;;;;4571:19;;;4568:39;;;4603:1;4600;4593:12;4568:39;4627:11;;;;4647:142;4663:6;4658:3;4655:15;4647:142;;;4729:17;;4717:30;;4680:12;;;;4767;;;;4647:142;;;4808:5;-1:-1:-1;;;;4866:2:41;4851:18;;4838:32;;-1:-1:-1;4882:16:41;;;4879:36;;;4911:1;4908;4901:12;4879:36;;;4934:51;4977:7;4966:8;4955:9;4951:24;4934:51;:::i;:::-;4924:61;;;3779:1212;;;;;:::o;6451:127::-;6512:10;6507:3;6503:20;6500:1;6493:31;6543:4;6540:1;6533:15;6567:4;6564:1;6557:15;6583:125;6648:9;;;6669:10;;;6666:36;;;6682:18;;:::i;6992:168::-;7065:9;;;7096;;7113:15;;;7107:22;;7093:37;7083:71;;7134:18;;:::i;7165:217::-;7205:1;7231;7221:132;;7275:10;7270:3;7266:20;7263:1;7256:31;7310:4;7307:1;7300:15;7338:4;7335:1;7328:15;7221:132;-1:-1:-1;7367:9:41;;7165:217::o;7737:127::-;7798:10;7793:3;7789:20;7786:1;7779:31;7829:4;7826:1;7819:15;7853:4;7850:1;7843:15;7869:135;7908:3;7929:17;;;7926:43;;7949:18;;:::i;:::-;-1:-1:-1;7996:1:41;7985:13;;7869:135::o;8009:250::-;8094:1;8104:113;8118:6;8115:1;8112:13;8104:113;;;8194:11;;;8188:18;8175:11;;;8168:39;8140:2;8133:10;8104:113;;;-1:-1:-1;;8251:1:41;8233:16;;8226:27;8009:250::o;8264:812::-;8675:25;8670:3;8663:38;8645:3;8730:6;8724:13;8746:75;8814:6;8809:2;8804:3;8800:12;8793:4;8785:6;8781:17;8746:75;:::i;:::-;-1:-1:-1;;;8880:2:41;8840:16;;;8872:11;;;8865:40;8930:13;;8952:76;8930:13;9014:2;9006:11;;8999:4;8987:17;;8952:76;:::i;:::-;9048:17;9067:2;9044:26;;8264:812;-1:-1:-1;;;;8264:812:41:o;9081:396::-;9230:2;9219:9;9212:21;9193:4;9262:6;9256:13;9305:6;9300:2;9289:9;9285:18;9278:34;9321:79;9393:6;9388:2;9377:9;9373:18;9368:2;9360:6;9356:15;9321:79;:::i;:::-;9461:2;9440:15;-1:-1:-1;;9436:29:41;9421:45;;;;9468:2;9417:54;;9081:396;-1:-1:-1;;9081:396:41:o;9482:136::-;9521:3;9549:5;9539:39;;9558:18;;:::i;:::-;-1:-1:-1;;;9594:18:41;;9482:136::o",
   "source": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\nimport \"@openzeppelin/contracts/security/ReentrancyGuard.sol\";\nimport \"@openzeppelin/contracts/access/AccessControl.sol\";\n\n/**\n * @title MerkleTreeLib\n * @dev Library for Merkle tree operations\n */\nlibrary MerkleTreeLib {\n    struct MerkleTree {\n        bytes32 root;\n        mapping(bytes32 => bool) verified;\n    }\n\n    function verifyProof(\n        bytes32 root,\n        bytes32 leaf,\n        bytes32[] memory proof\n    ) internal pure returns (bool) {\n        bytes32 computedHash = leaf;\n        \n        for (uint256 i = 0; i < proof.length; i++) {\n            computedHash = hashPair(computedHash, proof[i]);\n        }\n        \n        return computedHash == root;\n    }\n    \n    function hashPair(bytes32 a, bytes32 b) internal pure returns (bytes32) {\n        return keccak256(abi.encodePacked(a, b));\n    }\n}\n\n/**\n * @title RelayTypes\n * @dev Core data structures for relay chain operations\n */\nlibrary RelayTypes {\n    struct Transaction {\n        bytes32 id;\n        address sourceBridge;\n        address targetBridge;\n        bytes32 originalTxHash;\n        bytes metadata;\n        bytes32 merkleRoot;\n        uint256 timestamp;\n        bool isValidated;\n        bool isStateUpdated;\n        bool isRelayed;\n    }\n\n    struct StateUpdate {\n        bytes32 txId;\n        bytes32 merkleRoot;\n        bytes32[] affectedChains;\n        mapping(bytes32 => bool) notificationStatus;\n        uint256 updateTime;\n        bool isComplete;\n    }\n\n    struct ValidationState {\n        uint256 totalStake;\n        uint256 approvalStake;\n        uint256 startTime;\n        bool isComplete;\n        mapping(address => uint256) validatorStakes;\n    }\n}\n\n/**\n * @title ProofOfStakeValidator\n * @dev Manages PoS validation for relay chain\n */\ncontract ProofOfStakeValidator is AccessControl {\n    using RelayTypes for RelayTypes.Transaction;\n    using RelayTypes for RelayTypes.ValidationState;\n    using MerkleTreeLib for MerkleTreeLib.MerkleTree;\n\n    bytes32 public constant VALIDATOR_ROLE = keccak256(\"VALIDATOR_ROLE\");\n    \n    mapping(bytes32 => RelayTypes.ValidationState) public validationStates;\n    mapping(address => uint256) public validatorStakes;\n    \n    uint256 public constant MIN_STAKE = 1000 ether;\n    uint256 public constant VALIDATION_THRESHOLD = 70; // 70% stake approval needed\n    \n    event ValidationSubmitted(bytes32 indexed txId, address validator, uint256 stake);\n    event ValidationComplete(bytes32 indexed txId, bool isValid);\n    \n    constructor() {\n        _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);\n    }\n    \n    function submitValidation(\n        bytes32 txId,\n        bool approval\n    ) external {\n        require(hasRole(VALIDATOR_ROLE, msg.sender), \"Not a validator\");\n        \n        RelayTypes.ValidationState storage validationState = validationStates[txId];\n        require(!validationState.isComplete, \"Validation complete\");\n        \n        uint256 stake = validatorStakes[msg.sender];\n        require(stake >= MIN_STAKE, \"Insufficient stake\");\n        \n        if (approval) {\n            validationState.approvalStake += stake;\n        }\n        validationState.totalStake += stake;\n        validationState.validatorStakes[msg.sender] = stake;\n        \n        emit ValidationSubmitted(txId, msg.sender, stake);\n        \n        // Check if validation threshold is met\n        if (validationState.totalStake > 0) {\n            uint256 approvalPercentage = (validationState.approvalStake * 100) / \n                                        validationState.totalStake;\n            \n            if (approvalPercentage >= VALIDATION_THRESHOLD) {\n                validationState.isComplete = true;\n                emit ValidationComplete(txId, true);\n            }\n        }\n    }\n}\n\n/**\n * @title StateManager\n * @dev Handles state updates and Merkle tree management\n */\ncontract StateManager is ProofOfStakeValidator {\n    using MerkleTreeLib for MerkleTreeLib.MerkleTree;\n    \n    mapping(bytes32 => RelayTypes.StateUpdate) public stateUpdates;\n    mapping(bytes32 => bytes32) public chainStates;\n    \n    event StateUpdateInitiated(bytes32 indexed txId, bytes32 merkleRoot);\n    event ChainNotified(bytes32 indexed chainId, bytes32 indexed txId);\n    event StateUpdateComplete(bytes32 indexed txId);\n    \n    function updateState(\n        bytes32 txId,\n        bytes32[] memory affectedChains,\n        bytes memory txData\n    ) external onlyRole(DEFAULT_ADMIN_ROLE) {\n        RelayTypes.StateUpdate storage update = stateUpdates[txId];\n        require(!update.isComplete, \"State update complete\");\n        \n        bytes32 merkleRoot = createMerkleRoot(txData);\n        update.merkleRoot = merkleRoot;\n        update.affectedChains = affectedChains;\n        update.updateTime = block.timestamp;\n        \n        emit StateUpdateInitiated(txId, merkleRoot);\n        \n        for (uint256 i = 0; i < affectedChains.length; i++) {\n            notifyChain(affectedChains[i], txId, merkleRoot);\n        }\n    }\n    \n    function notifyChain(\n        bytes32 chainId,\n        bytes32 txId,\n        bytes32 merkleRoot\n    ) internal {\n        chainStates[chainId] = merkleRoot;\n        RelayTypes.StateUpdate storage update = stateUpdates[txId];\n        update.notificationStatus[chainId] = true;\n        \n        emit ChainNotified(chainId, txId);\n    }\n    \n    function createMerkleRoot(\n        bytes memory data\n    ) internal pure returns (bytes32) {\n        return keccak256(data);\n    }\n}\n\n/**\n * @title TransactionRelay\n * @dev Manages final transaction relay to receiving blockchain\n */\ncontract TransactionRelay is StateManager, ReentrancyGuard {\n    struct RelayedTransaction {\n        bytes32 txId;\n        bytes originalMetadata;\n        bytes enrichedData;\n        uint256 relayTime;\n        bool isComplete;\n    }\n    \n    mapping(bytes32 => RelayedTransaction) public relayedTransactions;\n    \n    event TransactionRelayed(\n        bytes32 indexed txId,\n        address indexed targetBridge,\n        bytes32 merkleRoot\n    );\n    \n    function relayTransaction(\n        bytes32 txId,\n        address targetBridge,\n        bytes memory originalMetadata,\n        bytes memory enrichedData\n    ) external nonReentrant onlyRole(DEFAULT_ADMIN_ROLE) {\n        require(\n            validationStates[txId].isComplete,\n            \"Validation incomplete\"\n        );\n        require(\n            stateUpdates[txId].isComplete,\n            \"State update incomplete\"\n        );\n        \n        RelayedTransaction storage relayedTx = relayedTransactions[txId];\n        require(!relayedTx.isComplete, \"Already relayed\");\n        \n        relayedTx.txId = txId;\n        relayedTx.originalMetadata = originalMetadata;\n        relayedTx.enrichedData = enrichedData;\n        relayedTx.relayTime = block.timestamp;\n        relayedTx.isComplete = true;\n        \n        emit TransactionRelayed(\n            txId,\n            targetBridge,\n            stateUpdates[txId].merkleRoot\n        );\n    }\n}\n\n/**\n * @title ReceivingBlockchainInterface\n * @dev Interface for receiving blockchain to process relayed transactions\n */\ncontract ReceivingBlockchainInterface is ReentrancyGuard {\n    struct ReceivedTransaction {\n        bytes32 txId;\n        bytes32 merkleRoot;\n        bytes metadata;\n        bytes enrichedData;\n        uint256 receiveTime;\n        bool isProcessed;\n    }\n    \n    mapping(bytes32 => ReceivedTransaction) public receivedTransactions;\n    \n    event TransactionReceived(bytes32 indexed txId, bytes32 merkleRoot);\n    event TransactionProcessed(bytes32 indexed txId);\n    \n    function receiveTransaction(\n        bytes32 txId,\n        bytes32 merkleRoot,\n        bytes memory metadata,\n        bytes memory enrichedData\n    ) external nonReentrant {\n        ReceivedTransaction storage receivedTx = receivedTransactions[txId];\n        require(!receivedTx.isProcessed, \"Already processed\");\n        \n        receivedTx.txId = txId;\n        receivedTx.merkleRoot = merkleRoot;\n        receivedTx.metadata = metadata;\n        receivedTx.enrichedData = enrichedData;\n        receivedTx.receiveTime = block.timestamp;\n        \n        emit TransactionReceived(txId, merkleRoot);\n        \n        processTransaction(txId);\n    }\n    \n    function processTransaction(bytes32 txId) internal {\n        ReceivedTransaction storage receivedTx = receivedTransactions[txId];\n        receivedTx.isProcessed = true;\n        \n        emit TransactionProcessed(txId);\n    }\n}",
-  "sourcePath": "C:\\Users\\Bonsu\\Documents\\CLEANER PRODUCTION\\renewalclimateproject\\contracts\\relay\\RelayChain.sol",
+  "sourcePath": "C:\\Users\\Bonsu\\Documents\\CLEANER PRODUCTION\\renewalclimateproject\\ClimateProjectFull\\contracts\\relay\\RelayChain.sol",
   "ast": {
     "absolutePath": "project:/contracts/relay/RelayChain.sol",
     "exportedSymbols": {
@@ -16508,8 +16497,7 @@
     }
   },
   "schemaVersion": "3.4.16",
-  "updatedAt": "2025-02-18T10:12:09.868Z",
-  "networkType": "ethereum",
+  "updatedAt": "2025-02-18T18:18:20.927Z",
   "devdoc": {
     "details": "Handles state updates and Merkle tree management",
     "events": {

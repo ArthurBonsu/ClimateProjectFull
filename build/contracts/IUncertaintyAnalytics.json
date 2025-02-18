@@ -89,7 +89,7 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\ninterface IUncertaintyAnalytics {\n    function submitRequest() external payable returns (uint256);\n    function submitResponse(uint256 _requestId) external;\n    function updateDisruptionLevel(uint256 _level) external;\n    function updateEscalationLevel(uint256 _level) external;\n    function calculateUnavailabilityCost(uint256 _requestId) external;\n    function updateDataHoldingCost(uint256 _cost) external;\n}",
-  "sourcePath": "C:\\Users\\Bonsu\\Documents\\CLEANER PRODUCTION\\renewalclimateproject\\interfaces\\IUncertaintyAnalytics.sol",
+  "sourcePath": "C:\\Users\\Bonsu\\Documents\\CLEANER PRODUCTION\\renewalclimateproject\\ClimateProjectFull\\interfaces\\IUncertaintyAnalytics.sol",
   "ast": {
     "absolutePath": "project:/interfaces/IUncertaintyAnalytics.sol",
     "exportedSymbols": {
@@ -472,7 +472,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.16",
-  "updatedAt": "2025-02-18T10:12:04.220Z",
+  "updatedAt": "2025-02-18T18:18:20.934Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

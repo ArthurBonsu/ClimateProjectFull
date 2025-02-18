@@ -946,7 +946,7 @@
   "sourceMap": "107:459:20:-:0;;;198:250;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;-1:-1:-1;;;;;248:24:20;;240:69;;;;-1:-1:-1;;;240:69:20;;511:2:41;240:69:20;;;493:21:41;;;530:18;;;523:30;589:34;569:18;;;562:62;641:18;;240:69:20;;;;;;;;;352:1;327:10;-1:-1:-1;;;;;327:22:20;;:26;319:67;;;;-1:-1:-1;;;319:67:20;;872:2:41;319:67:20;;;854:21:41;911:2;891:18;;;884:30;950;930:18;;;923:58;998:18;;319:67:20;670:352:41;319:67:20;-1:-1:-1;;;;;396:45:20;;;107:459;;14:290:41;84:6;137:2;125:9;116:7;112:23;108:32;105:52;;;153:1;150;143:12;105:52;179:16;;-1:-1:-1;;;;;224:31:41;;214:42;;204:70;;270:1;267;260:12;204:70;293:5;14:290;-1:-1:-1;;;14:290:41:o;670:352::-;107:459:20;;;;;;;;;;;;",
   "deployedSourceMap": "107:459:20:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;458:106;;;;;;:::i;:::-;;:::i;:::-;;;521:36;;-1:-1:-1;;;521:36:20;;;;;345:25:41;;;521:9:20;-1:-1:-1;;;;;521:24:20;;;;318:18:41;;521:36:20;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;458:106;:::o;14:180:41:-;73:6;126:2;114:9;105:7;101:23;97:32;94:52;;;142:1;139;132:12;94:52;-1:-1:-1;165:23:41;;14:180;-1:-1:-1;14:180:41:o",
   "source": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\nimport \"../interfaces/IUncertaintyAnalytics.sol\";\n\ncontract ResponseManager {\n    IUncertaintyAnalytics private immutable analytics;\n    \n    constructor(address _analytics) {\n        require(_analytics != address(0), \"Analytics address cannot be zero\");\n        require(_analytics.code.length > 0, \"Analytics must be a contract\");\n        analytics = IUncertaintyAnalytics(_analytics);\n    }\n    \n    function submitResponse(uint256 _requestId) external {\n        analytics.submitResponse(_requestId);\n    }\n}",
-  "sourcePath": "C:\\Users\\Bonsu\\Documents\\CLEANER PRODUCTION\\renewalclimateproject\\contracts\\ResponseManager.sol",
+  "sourcePath": "C:\\Users\\Bonsu\\Documents\\CLEANER PRODUCTION\\renewalclimateproject\\ClimateProjectFull\\contracts\\ResponseManager.sol",
   "ast": {
     "absolutePath": "project:/contracts/ResponseManager.sol",
     "exportedSymbols": {
@@ -1629,8 +1629,7 @@
     }
   },
   "schemaVersion": "3.4.16",
-  "updatedAt": "2025-02-18T10:12:10.709Z",
-  "networkType": "ethereum",
+  "updatedAt": "2025-02-18T18:18:20.745Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},
