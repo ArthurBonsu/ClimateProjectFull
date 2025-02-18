@@ -1,0 +1,231 @@
+import pandas as pd
+from web3 import Web3
+import json
+import logging
+from datetime import datetime
+import numpy as np
+
+class BlockchainWorkflow:
+    # ... (previous __init__ and utility methods remain the same)
+
+!pip install web3 pandas
+contract_addresses = {
+    'CityRegister': '0x...',
+    'CompanyRegister': '0x...',
+    'CityEmissionsContract': '0x...',
+    'RenewalTheoryContract': '0x...',
+    'CityHealthCalculator': '0x...',
+    'TemperatureRenewalContract': '0x...'
+}
+
+workflow = BlockchainWorkflow('YOUR_WEB3_PROVIDER_URL', contract_addresses)
+
+workflow.load_contract('CityRegister', 'path/to/CityRegister.json')
+# Load other contracts similarly
+
+await workflow.run_complete_workflow('CityData.csv', 'CompanyData.csv')
+
+    async def register_company_data(self, company_data):
+        """
+        Send company data to CompanyRegister contract
+        """
+        try:
+            contract = self.contracts['CompanyRegister']
+            for record in company_data:
+                tx_hash = await contract.functions.registerCompany(
+                    record['company_name'],
+                    record['registration_date'],
+                    record['sector'],
+                    record['emissions_baseline']
+                ).transact()
+                receipt = await self.w3.eth.wait_for_transaction_receipt(tx_hash)
+                logging.info(f"Company data registered. Transaction hash: {tx_hash.hex()}")
+                self.log_to_file('company_register_logs.json', record, receipt)
+        except Exception as e:
+            logging.error(f"Error registering company data: {str(e)}")
+            raise
+
+    async def process_emissions_data(self, city_data):
+        """
+        Process emissions data through CityEmissionsContract
+        """
+        try:
+            contract = self.contracts['CityEmissionsContract']
+            
+            # Group emissions by city and date
+            df = pd.DataFrame(city_data)
+            grouped_emissions = df.groupby(['city', 'date'])['value'].sum().reset_index()
+            
+            for _, row in grouped_emissions.iterrows():
+                tx_hash = await contract.functions.processEmissions(
+                    row['city'],
+                    row['date'],
+                    float(row['value'])
+                ).transact()
+                receipt = await self.w3.eth.wait_for_transaction_receipt(tx_hash)
+                logging.info(f"Emissions processed for {row['city']} on {row['date']}")
+                self.log_to_file('emissions_processing_logs.json', row.to_dict(), receipt)
+                
+            return grouped_emissions.to_dict('records')
+        except Exception as e:
+            logging.error(f"Error processing emissions data: {str(e)}")
+            raise
+
+    async def calculate_renewal_metrics(self, city_data, company_data):
+        """
+        Calculate renewal theory metrics through RenewalTheoryContract
+        """
+        try:
+            contract = self.contracts['RenewalTheoryContract']
+            
+            # Prepare data for renewal calculations
+            city_df = pd.DataFrame(city_data)
+            company_df = pd.DataFrame(company_data)
+            
+            for city in city_df['city'].unique():
+                city_emissions = city_df[city_df['city'] == city]['value'].sum()
+                company_emissions = company_df[company_df['city'] == city]['emissions_baseline'].sum()
+                
+                tx_hash = await contract.functions.calculateRenewalMetrics(
+                    city,
+                    float(city_emissions),
+                    float(company_emissions)
+                ).transact()
+                receipt = await self.w3.eth.wait_for_transaction_receipt(tx_hash)
+                
+                metrics = {
+                    'city': city,
+                    'total_emissions': city_emissions,
+                    'company_emissions': company_emissions
+                }
+                logging.info(f"Renewal metrics calculated for {city}")
+                self.log_to_file('renewal_metrics_logs.json', metrics, receipt)
+                
+        except Exception as e:
+            logging.error(f"Error calculating renewal metrics: {str(e)}")
+            raise
+
+    async def calculate_city_health(self, city_data):
+        """
+        Calculate city health metrics through CityHealthCalculator
+        """
+        try:
+            contract = self.contracts['CityHealthCalculator']
+            
+            # Prepare city health metrics
+            df = pd.DataFrame(city_data)
+            for city in df['city'].unique():
+                city_records = df[df['city'] == city]
+                
+                # Calculate health indicators
+                total_emissions = city_records['value'].sum()
+                emission_variance = city_records['value'].var()
+                peak_emission = city_records['value'].max()
+                
+                tx_hash = await contract.functions.calculateCityHealth(
+                    city,
+                    float(total_emissions),
+                    float(emission_variance),
+                    float(peak_emission)
+                ).transact()
+                receipt = await self.w3.eth.wait_for_transaction_receipt(tx_hash)
+                
+                health_data = {
+                    'city': city,
+                    'total_emissions': total_emissions,
+                    'emission_variance': emission_variance,
+                    'peak_emission': peak_emission
+                }
+                logging.info(f"Health metrics calculated for {city}")
+                self.log_to_file('city_health_logs.json', health_data, receipt)
+                
+        except Exception as e:
+            logging.error(f"Error calculating city health: {str(e)}")
+            raise
+
+    async def process_temperature_data(self, temperature_data):
+        """
+        Process temperature data through TemperatureRenewalContract
+        """
+        try:
+            contract = self.contracts['TemperatureRenewalContract']
+            
+            df = pd.DataFrame(temperature_data)
+            for city in df['city'].unique():
+                city_temps = df[df['city'] == city]
+                
+                avg_temp = city_temps['temperature'].mean()
+                temp_variance = city_temps['temperature'].var()
+                temp_trend = np.polyfit(range(len(city_temps)), city_temps['temperature'], 1)[0]
+                
+                tx_hash = await contract.functions.processTemperatureData(
+                    city,
+                    float(avg_temp),
+                    float(temp_variance),
+                    float(temp_trend)
+                ).transact()
+                receipt = await self.w3.eth.wait_for_transaction_receipt(tx_hash)
+                
+                temp_metrics = {
+                    'city': city,
+                    'average_temperature': avg_temp,
+                    'temperature_variance': temp_variance,
+                    'temperature_trend': temp_trend
+                }
+                logging.info(f"Temperature data processed for {city}")
+                self.log_to_file('temperature_logs.json', temp_metrics, receipt)
+                
+        except Exception as e:
+            logging.error(f"Error processing temperature data: {str(e)}")
+            raise
+
+    def generate_summary_report(self):
+        """
+        Generate a summary report of all processed data
+        """
+        try:
+            report = {
+                'timestamp': datetime.now().isoformat(),
+                'cities_processed': set(),
+                'companies_processed': set(),
+                'total_transactions': 0,
+                'gas_used': 0
+            }
+            
+            # Process all log files
+            log_files = [
+                'city_register_logs.json',
+                'company_register_logs.json',
+                'emissions_processing_logs.json',
+                'renewal_metrics_logs.json',
+                'city_health_logs.json',
+                'temperature_logs.json'
+            ]
+            
+            for log_file in log_files:
+                try:
+                    with open(log_file, 'r') as f:
+                        for line in f:
+                            data = json.loads(line)
+                            if 'city' in data['data']:
+                                report['cities_processed'].add(data['data']['city'])
+                            if 'company_name' in data['data']:
+                                report['companies_processed'].add(data['data']['company_name'])
+                            report['total_transactions'] += 1
+                            report['gas_used'] += data['gas_used']
+                except FileNotFoundError:
+                    continue
+            
+            # Convert sets to lists for JSON serialization
+            report['cities_processed'] = list(report['cities_processed'])
+            report['companies_processed'] = list(report['companies_processed'])
+            
+            with open('workflow_summary_report.json', 'w') as f:
+                json.dump(report, f, indent=2)
+            
+            logging.info("Summary report generated successfully")
+            return report
+            
+        except Exception as e:
+            logging.error(f"Error generating summary report: {str(e)}")
+            raise
