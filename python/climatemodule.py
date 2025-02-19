@@ -150,42 +150,42 @@ class CityModule:
                 raise
 
     async def register_city_data(self, city_data):
-    """
-    Register city data on the blockchain with enhanced flexibility
-    """
-    try:
-        if 'CityRegister' not in self.workflow.contracts:
-            raise ValueError("CityRegister contract not loaded")
+        """
+        Register city data on the blockchain with enhanced flexibility
+        """
+        try:
+            if 'CityRegister' not in self.workflow.contracts:
+                raise ValueError("CityRegister contract not loaded")
 
-        contract = self.workflow.contracts['CityRegister']
-        
-        # Group data by unique cities to avoid redundant registrations
-        unique_cities = city_data.groupby('city').first().reset_index()
-        
-        for _, record in unique_cities.iterrows():
-            try:
-                tx_hash = await contract.functions.registerCity(
-                    record['city'],
-                    record['date'],  # Using first date for city registration
-                    record['sector'],
-                    float(record['value'])
-                ).transact({
-                    'from': self.workflow.w3.eth.accounts[0],
-                    'gas': 2000000
-                })
-                
-                receipt = await self.workflow.w3.eth.wait_for_transaction_receipt(tx_hash)
-                self.workflow.log_to_file('city_register_logs.json', record.to_dict(), receipt)
-                
-                logging.info(f"Registered city data for {record['city']}")
+            contract = self.workflow.contracts['CityRegister']
             
-            except Exception as record_error:
-                logging.error(f"Error registering city: {record_error}")
-                continue
+            # Group data by unique cities to avoid redundant registrations
+            unique_cities = city_data.groupby('city').first().reset_index()
+            
+            for _, record in unique_cities.iterrows():
+                try:
+                    tx_hash = await contract.functions.registerCity(
+                        record['city'],
+                        record['date'],  # Using first date for city registration
+                        record['sector'],
+                        float(record['value'])
+                    ).transact({
+                        'from': self.workflow.w3.eth.accounts[0],
+                        'gas': 2000000
+                    })
+                    
+                    receipt = await self.workflow.w3.eth.wait_for_transaction_receipt(tx_hash)
+                    self.workflow.log_to_file('city_register_logs.json', record.to_dict(), receipt)
+                    
+                    logging.info(f"Registered city data for {record['city']}")
+                
+                except Exception as record_error:
+                    logging.error(f"Error registering city: {record_error}")
+                    continue
 
-    except Exception as e:
-        logging.error(f"Error in city data registration: {str(e)}")
-        raise
+        except Exception as e:
+            logging.error(f"Error in city data registration: {str(e)}")
+            raise
 
 # Optional: Configuration customization example
 def create_city_module(workflow):

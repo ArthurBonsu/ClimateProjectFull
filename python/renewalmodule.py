@@ -277,10 +277,19 @@ class RenewalModule:
             self.logger.error(f"Comprehensive renewal metrics calculation error: {e}")
             raise
 
-# Optional: Configuration customization example
 def create_renewal_module(workflow):
-    #"""
-   # Factory method to create RenewalModule with custom configuration
+    """
+    Factory method to create RenewalModule with custom configuration
     
-   # :param workflow: BlockchainWorkflow instance
-   # :return: Configured RenewalModule instance
+    :param workflow: BlockchainWorkflow instance
+    :return: Configured RenewalModule instance
+    """
+    custom_config = {
+        'max_concurrent_transactions': 3,
+        'batch_size': 50,
+        'renewal_metrics': {
+            'emissions_reduction_target': 0.15,  # 15% reduction target
+            'time_window_days': 365  # Annual analysis
+        }
+    }
+    return RenewalModule(workflow, config=custom_config)

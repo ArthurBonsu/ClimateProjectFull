@@ -112,7 +112,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -131,7 +132,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -173,7 +175,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -202,7 +205,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -257,7 +261,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -25873,7 +25878,8 @@
     }
   },
   "schemaVersion": "3.4.16",
-  "updatedAt": "2025-02-18T18:18:20.882Z",
+  "updatedAt": "2025-02-19T20:13:35.376Z",
+  "networkType": "ethereum",
   "devdoc": {
     "details": "Handles creation and management of speculative transactions",
     "events": {

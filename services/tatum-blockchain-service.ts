@@ -26,11 +26,16 @@ export class TatumBlockchainService {
     // Prefer Tatum RPC URL, fallback to provider URL
     const providerUrl = this.networkConfig.rpcUrl || this.networkConfig.providerUrl;
     
-    this.web3 = new Web3(
-      new Web3.providers.HttpProvider(providerUrl!, {
-        headers: [{ name: 'x-api-key', value: this.apiKey }]
-      })
-    );
+    // Create Web3 instance with custom provider configuration
+    this.web3 = new Web3(providerUrl);
+
+    // Set up custom provider options
+    const provider = this.web3.currentProvider as any;
+    if (provider) {
+      provider.headers = {
+        'x-api-key': this.apiKey
+      };
+    }
   }
 
   // Comprehensive connection test
@@ -81,6 +86,17 @@ export class TatumBlockchainService {
     }
   }
 
+ // Fix balance method
+ async getBalance(address: string): Promise<string> {
+  try {
+    const balanceWei = await this.web3.eth.getBalance(address);
+    return this.web3.utils.fromWei(balanceWei.toString(), 'ether');
+  } catch (error) {
+    console.error(`Failed to get balance for ${address}:`, error);
+    throw error;
+  }
+}
+
   // Get current block number
   async getCurrentBlockNumber(): Promise<number> {
     try {
@@ -118,7 +134,7 @@ export class TatumBlockchainService {
       
       // Fallback to Web3 method if axios fails
       try {
-        return await this.web3.eth.getBlockNumber();
+        return Number(await this.web3.eth.getBlockNumber());
       } catch (web3Error) {
         console.error('Web3 block number retrieval failed:', web3Error);
         throw error;
@@ -126,166 +142,123 @@ export class TatumBlockchainService {
     }
   }
 
-  // Get balance of an address
-  async getBalance(address: string): Promise<string> {
-    try {
-      const balanceWei = await this.web3.eth.getBalance(address);
-      return this.web3.utils.fromWei(balanceWei, 'ether');
-    } catch (error) {
-      console.error(`Failed to get balance for ${address}:`, error);
-      throw error;
-    }
-  }
+
 
   // Deploy a contract with comprehensive error handling
-  async deployContract(
-    abi: any[], 
-    bytecode: string, 
-    from: string, 
-    privateKey: string
-  ): Promise<{ 
-    contractAddress: string, 
-    transactionHash: string,
-    blockNumber: number 
-  }> {
-    try {
-      // Validate inputs
-      if (!abi || !bytecode || !from || !privateKey) {
-        throw new Error('Missing required deployment parameters');
-      }
-  
-      // Create contract instance
-      const contract = new this.web3.eth.Contract(abi);
-  
-      // Estimate gas
-      const gasEstimate = await contract
-        .deploy({ data: bytecode })
-        .estimateGas({ from });
-  
-      // Get current gas price
-      const gasPrice = await this.web3.eth.getGasPrice();
-  
-      // Sign the transaction
-      const signedTx = await this.web3.eth.accounts.signTransaction(
-        {
-          from,
-          data: bytecode,
-          gas: Math.floor(gasEstimate * 1.2), // Add 20% buffer
-          gasPrice
-        },
-        privateKey
-      );
-  
-      // Ensure rawTransaction exists
-      if (!signedTx.rawTransaction) {
-        throw new Error('Transaction signing failed: No raw transaction');
-      }
-  
-      // Send the transaction
-      const receipt = await this.web3.eth.sendSignedTransaction(
-        signedTx.rawTransaction
-      );
-  
-      // Validate receipt
-      if (!receipt.contractAddress) {
-        throw new Error('Contract deployment failed: No contract address in receipt');
-      }
-  
-      return {
-        contractAddress: receipt.contractAddress,
-        transactionHash: receipt.transactionHash,
-        blockNumber: receipt.blockNumber || 0
-      };
-    } catch (error) {
-      console.error('Contract deployment failed:', error);
-      
-      // Enhanced error logging
-      if (error instanceof Error) {
-        console.error('Error details:', {
-          message: error.message,
-          stack: error.stack
-        });
-      }
-      
-      throw error;
-    }
-  }
+ // Fix deployment method with correct types
+ async deployContract(
+  abi: any[], 
+  bytecode: string, 
+  from: string, 
+  privateKey: string
+): Promise<{ 
+  contractAddress: string, 
+  transactionHash: string,
+  blockNumber: number 
+}> {
+  try {
+    // Create contract instance
+    const contract = new this.web3.eth.Contract(abi);
 
-  // Advanced transaction sending with detailed logging
-  async sendTransaction(
-    from: string, 
-    to: string, 
-    amount: string, 
-    privateKey: string,
-    options?: {
-      gasPrice?: string;
-      gasLimit?: number;
-      nonce?: number;
-    }
-  ): Promise<{
-    transactionHash: string;
-    blockNumber?: number;
-    gasUsed?: number;
-  }> {
-    try {
-      // Validate inputs
-      if (!from || !to || !amount || !privateKey) {
-        throw new Error('Missing required transaction parameters');
-      }
-  
-      // Get nonce and gas price
-      const nonce = options?.nonce || await this.web3.eth.getTransactionCount(from);
-      const gasPrice = options?.gasPrice || await this.web3.eth.getGasPrice();
-  
-      // Prepare transaction
-      const tx = {
+    // Estimate gas and convert bigint to number
+    const gasEstimate = await contract
+      .deploy({ data: bytecode })
+      .estimateGas({ from });
+    
+    // Convert gasEstimate to number and add buffer
+    const gasLimit = Number(gasEstimate) * 1.2;
+
+    // Get current gas price
+    const gasPrice = await this.web3.eth.getGasPrice();
+
+    // Sign the transaction
+    const signedTx = await this.web3.eth.accounts.signTransaction(
+      {
         from,
-        to,
-        value: this.web3.utils.toWei(amount, 'ether'),
-        gas: options?.gasLimit || 21000, // Standard gas limit for ETH transfer
-        gasPrice,
-        nonce
-      };
-  
-      // Sign transaction
-      const signedTx = await this.web3.eth.accounts.signTransaction(tx, privateKey);
-  
-      // Ensure rawTransaction exists
-      if (!signedTx.rawTransaction) {
-        throw new Error('Transaction signing failed: No raw transaction');
-      }
-  
-      // Send signed transaction
-      const receipt = await this.web3.eth.sendSignedTransaction(
-        signedTx.rawTransaction
-      );
-  
-      // Validate receipt
-      if (!receipt.transactionHash) {
-        throw new Error('Transaction submission failed: No transaction hash');
-      }
-  
-      return {
-        transactionHash: receipt.transactionHash,
-        blockNumber: receipt.blockNumber || undefined,
-        gasUsed: receipt.gasUsed || undefined
-      };
-    } catch (error) {
-      // Enhanced error logging
-      console.error('Transaction failed:', error);
-      
-      if (error instanceof Error) {
-        console.error('Error details:', {
-          message: error.message,
-          stack: error.stack
-        });
-      }
-  
-      // Rethrow or handle specific error types
-      throw error;
-    }
-  }
+        data: bytecode,
+        gas: Math.floor(gasLimit), // Use calculated gas limit
+        gasPrice: gasPrice.toString() // Convert bigint to string
+      },
+      privateKey
+    );
 
+    if (!signedTx.rawTransaction) {
+      throw new Error('Transaction signing failed: No raw transaction');
+    }
+
+    // Send the transaction
+    const receipt = await this.web3.eth.sendSignedTransaction(
+      signedTx.rawTransaction
+    );
+
+    if (!receipt.contractAddress) {
+      throw new Error('Contract deployment failed: No contract address in receipt');
+    }
+
+    return {
+      contractAddress: receipt.contractAddress,
+      transactionHash: receipt.transactionHash.toString(), // Convert to string
+      blockNumber: Number(receipt.blockNumber) || 0 // Convert to number
+    };
+  } catch (error) {
+    console.error('Contract deployment failed:', error);
+    throw error;
+  }
+}
+
+ // Fix transaction method with correct types
+ async sendTransaction(
+  from: string, 
+  to: string, 
+  amount: string, 
+  privateKey: string,
+  options?: {
+    gasPrice?: string;
+    gasLimit?: number;
+    nonce?: number;
+  }
+): Promise<{
+  transactionHash: string;
+  blockNumber?: number;
+  gasUsed?: number;
+}> {
+  try {
+    // Get nonce and gas price
+    const nonce = options?.nonce || Number(await this.web3.eth.getTransactionCount(from));
+    const gasPrice = options?.gasPrice || (await this.web3.eth.getGasPrice()).toString();
+
+    // Prepare transaction
+    const tx = {
+      from,
+      to,
+      value: this.web3.utils.toWei(amount, 'ether'),
+      gas: options?.gasLimit || 21000,
+      gasPrice,
+      nonce
+    };
+
+    // Sign transaction
+    const signedTx = await this.web3.eth.accounts.signTransaction(tx, privateKey);
+
+    if (!signedTx.rawTransaction) {
+      throw new Error('Transaction signing failed: No raw transaction');
+    }
+
+    // Send signed transaction
+    const receipt = await this.web3.eth.sendSignedTransaction(
+      signedTx.rawTransaction
+    );
+
+    return {
+      transactionHash: receipt.transactionHash.toString(),
+      blockNumber: receipt.blockNumber ? Number(receipt.blockNumber) : undefined,
+      gasUsed: receipt.gasUsed ? Number(receipt.gasUsed) : undefined
+    };
+  } catch (error) {
+    console.error('Transaction failed:', error);
+    throw error;
+  }
+}
   // Get detailed transaction details
   async getTransactionDetails(txHash: string) {
     try {
@@ -302,12 +275,14 @@ export class TatumBlockchainService {
       throw error;
     }
   }
-
+ 
   // Utility method to interact with specific contracts
   getContractInstance(address: string, abi: any[]) {
     return new this.web3.eth.Contract(abi, address);
   }
 }
+
+
 
 // Factory function with improved type safety and configuration
 export function createTatumBlockchainService(
