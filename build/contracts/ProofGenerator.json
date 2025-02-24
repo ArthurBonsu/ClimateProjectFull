@@ -7867,7 +7867,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.16",
-  "updatedAt": "2025-02-19T20:13:31.247Z",
+  "updatedAt": "2025-02-21T06:43:14.001Z",
   "devdoc": {
     "details": "Handles ZK-SNARK proof generation and validation",
     "kind": "dev",

@@ -42,7 +42,7 @@ class EmissionsModule:
                 'date_format': '%d/%m/%Y'
             },
             'aggregation_strategy': {
-                'method': 'sum',  # or 'mean', 'max', etc.
+                'method': 'sum',
                 'groupby_columns': ['city', 'date', 'sector']
             },
             'logging': {
@@ -61,8 +61,9 @@ class EmissionsModule:
         logger.setLevel(self.config['logging']['level'])
         
         # File handler
+        log_dir = self.workflow.project_root + '/logs'
         file_handler = logging.FileHandler(
-            self.config['logging']['filename'], 
+            f'{log_dir}/{self.config["logging"]["filename"]}', 
             encoding='utf-8'
         )
         file_handler.setFormatter(logging.Formatter(
@@ -71,107 +72,6 @@ class EmissionsModule:
         logger.addHandler(file_handler)
         
         return logger
-
-    def validate_data(self, df: pd.DataFrame) -> pd.DataFrame:
-        """
-        Validate input data based on configuration rules
-        
-        :param df: Input DataFrame
-        :return: Validated DataFrame
-        """
-        validation_rules = self.config['validation_rules']
-        
-        # Check required columns
-        missing_columns = set(validation_rules['required_columns']) - set(df.columns)
-        if missing_columns:
-            raise ValueError(f"Missing columns: {missing_columns}")
-        
-        try:
-            # Convert date to specified format
-            df['date'] = pd.to_datetime(
-                df['date'], 
-                format=validation_rules['date_format']
-            ).dt.strftime('%d/%m/%Y')
-            
-            # Validate numeric values
-            df['value'] = pd.to_numeric(df['value'], errors='raise')
-            
-            # Check value range
-            value_range = validation_rules['value_range']
-            invalid_values = df[
-                (df['value'] < value_range['min']) | 
-                (df['value'] > value_range['max'])
-            ]
-            
-            if not invalid_values.empty:
-                self.logger.warning(f"Found {len(invalid_values)} invalid value records")
-                df = df[
-                    (df['value'] >= value_range['min']) & 
-                    (df['value'] <= value_range['max'])
-                ]
-        
-        except Exception as e:
-            self.logger.error(f"Data validation error: {e}")
-            raise
-        
-        return df
-
-    def aggregate_emissions(self, df: pd.DataFrame) -> pd.DataFrame:
-        """
-        Aggregate emissions based on configuration
-        
-        :param df: Input DataFrame
-        :return: Aggregated DataFrame
-        """
-        agg_strategy = self.config['aggregation_strategy']
-        
-        # Perform aggregation
-        if agg_strategy['method'] == 'sum':
-            aggregated = df.groupby(agg_strategy['groupby_columns'])['value'].sum().reset_index()
-        elif agg_strategy['method'] == 'mean':
-            aggregated = df.groupby(agg_strategy['groupby_columns'])['value'].mean().reset_index()
-        elif agg_strategy['method'] == 'max':
-            aggregated = df.groupby(agg_strategy['groupby_columns'])['value'].max().reset_index()
-        else:
-            raise ValueError(f"Unsupported aggregation method: {agg_strategy['method']}")
-        
-        self.logger.info(f"Aggregated emissions by {agg_strategy['method']} method")
-        return aggregated
-
-    async def _process_emissions_batch(self, batch: pd.DataFrame):
-        """
-        Process a batch of emissions data with rate limiting and error handling
-        
-        :param batch: DataFrame containing emissions data batch
-        """
-        async with self.transaction_semaphore:
-            try:
-                contract = self.workflow.contracts['CityEmissionsContract']
-                
-                for _, row in batch.iterrows():
-                    try:
-                        tx_hash = await contract.functions.processEmissions(
-                            row['city'], 
-                            row['date'], 
-                            float(row['value'])
-                        ).transact({
-                            'from': self.workflow.w3.eth.accounts[0],
-                            'gas': 2000000
-                        })
-                        
-                        receipt = await self.workflow.w3.eth.wait_for_transaction_receipt(tx_hash)
-                        
-                        self.workflow.log_to_file('emissions_processing_logs.json', row.to_dict(), receipt)
-                        self.logger.info(f"Processed emissions for {row['city']} on {row['date']}")
-                    
-                    except Exception as record_error:
-                        self.logger.error(f"Error processing emissions record: {record_error}")
-                        # Optionally, log failed record for later review
-                        continue
-            
-            except Exception as batch_error:
-                self.logger.error(f"Batch emissions processing error: {batch_error}")
-                raise
 
     async def process_emissions_data(self, city_data):
         """
@@ -191,47 +91,124 @@ class EmissionsModule:
             # Validate data
             validated_data = self.validate_data(city_data)
             
-            # Aggregate emissions
-            aggregated_data = self.aggregate_emissions(validated_data)
+            # Optional: Aggregate emissions if needed
+            aggregated_data = validated_data.groupby(['city', 'date'])['value'].sum().reset_index()
             
             self.logger.info(f"Processing {len(aggregated_data)} aggregated emissions records")
             
-            # Batch processing
-            batch_size = self.config.get('batch_size', 100)
-            batches = [
-                aggregated_data[i:i+batch_size] 
-                for i in range(0, len(aggregated_data), batch_size)
-            ]
+            contract = self.workflow.contracts['CityEmissionsContract']
             
-            # Process batches concurrently
-            tasks = [self._process_emissions_batch(batch) for batch in batches]
-            await asyncio.gather(*tasks)
+            for _, row in aggregated_data.iterrows():
+                try:
+                    # Prepare transaction parameters
+                    tx_params = {
+                        'from': self.workflow.w3.eth.accounts[0],
+                        'gas': 2000000
+                    }
+                    
+                    # Convert date to timestamp
+                    date_timestamp = int(row['date'].timestamp())
+                    
+                    # Process emissions transaction
+                    tx_hash = await contract.functions.processEmissions(
+                        row['city'], 
+                        date_timestamp, 
+                        int(row['value'] * 1000)  # Convert to integer (scaled)
+                    ).transact(tx_params)
+                    
+                    # Wait for transaction receipt
+                    receipt = await self.workflow.w3.eth.wait_for_transaction_receipt(tx_hash)
+                    
+                    # Log transaction
+                    self.workflow.log_to_file('emissions_processing_logs.json', row.to_dict(), receipt)
+                    
+                    self.logger.info(f"Processed emissions for {row['city']} on {row['date']}")
+                
+                except Exception as record_error:
+                    self.logger.error(f"Error processing emissions record: {record_error}")
+                    continue
             
             self.logger.info("Emissions data processing completed")
+            
+            return aggregated_data
         
         except Exception as e:
             self.logger.error(f"Comprehensive emissions data processing error: {e}")
             raise
 
-# Optional: Configuration customization example
-def create_emissions_module(workflow):
+    def validate_data(self, df: pd.DataFrame) -> pd.DataFrame:
+        """
+        Validate input emissions data
+        
+        :param df: Input DataFrame
+        :return: Validated DataFrame
+        """
+        # Validate required columns
+        required_columns = ['city', 'date', 'sector', 'value']
+        missing_columns = set(required_columns) - set(df.columns)
+        if missing_columns:
+            raise ValueError(f"Missing required columns: {missing_columns}")
+        
+        # Ensure date is datetime
+        df['date'] = pd.to_datetime(df['date'])
+        
+        # Validate numeric values
+        df['value'] = pd.to_numeric(df['value'], errors='raise')
+        
+        # Check value range (adjust as needed)
+        value_min = 0
+        value_max = 1000
+        out_of_range = df[(df['value'] < value_min) | (df['value'] > value_max)]
+        
+        if not out_of_range.empty:
+            self.logger.warning(f"Found {len(out_of_range)} values outside expected range")
+            # Optionally, log or filter out these values
+            df = df[(df['value'] >= value_min) & (df['value'] <= value_max)]
+        
+        return df
+    
+    def generate_emissions_report(self, emissions_metrics: pd.DataFrame) -> Dict[str, Any]:
+        """
+        Generate a comprehensive emissions report
+        
+        :param emissions_metrics: DataFrame with emissions metrics
+        :return: Summary report dictionary
+        """
+        try:
+            # Ensure input is a DataFrame
+            if not isinstance(emissions_metrics, pd.DataFrame):
+                emissions_metrics = pd.DataFrame(emissions_metrics)
+            
+            # Prepare report dictionary
+            report = {
+                'total_cities_analyzed': len(emissions_metrics['city'].unique()),
+                'total_emissions': emissions_metrics['value'].sum(),
+                'average_emissions': emissions_metrics['value'].mean(),
+                'highest_emission_city': emissions_metrics.loc[
+                    emissions_metrics['value'].idxmax(), 'city'
+                ],
+                'lowest_emission_city': emissions_metrics.loc[
+                    emissions_metrics['value'].idxmin(), 'city'
+                ],
+                'emissions_by_city': emissions_metrics.groupby('city')['value'].sum().to_dict(),
+                'date_range': {
+                    'start': emissions_metrics['date'].min(),
+                    'end': emissions_metrics['date'].max()
+                }
+            }
+            
+            self.logger.info("Generated comprehensive emissions report")
+            return report
+        
+        except Exception as e:
+            self.logger.error(f"Error generating emissions report: {e}")
+            return {}
+
+def create_emissions_module(workflow, config=None):
     """
     Factory method to create EmissionsModule with custom configuration
     
     :param workflow: BlockchainWorkflow instance
     :return: Configured EmissionsModule instance
     """
-    custom_config = {
-        'max_concurrent_transactions': 3,
-        'batch_size': 50,
-        'validation_rules': {
-            'required_columns': ['city', 'date', 'sector', 'value'],
-            'value_range': {'min': 0, 'max': 50},
-            'date_format': '%d/%m/%Y'
-        },
-        'aggregation_strategy': {
-            'method': 'mean',
-            'groupby_columns': ['city', 'sector']
-        }
-    }
-    return EmissionsModule(workflow, config=custom_config)
+    return EmissionsModule(workflow, config)

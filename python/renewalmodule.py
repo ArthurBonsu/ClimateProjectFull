@@ -6,14 +6,16 @@ import asyncio
 from typing import List, Dict, Any
 
 class RenewalModule:
-    def __init__(self, workflow, config=None):
+    def __init__(self, workflow=None, config=None):
         """
         Initialize RenewalModule with workflow context and configuration
         
         :param workflow: BlockchainWorkflow instance
         :param config: Configuration dictionary for module behavior
         """
+        # Store workflow instance
         self.workflow = workflow
+        
         self.config = config or self._default_config()
         
         # Setup specialized logger
@@ -79,12 +81,25 @@ class RenewalModule:
         :param df: Input DataFrame
         :return: Validated DataFrame
         """
+        # If None is passed, return an empty DataFrame
+        if df is None:
+            return pd.DataFrame(columns=self.config['validation_rules']['required_columns'])
+        
         validation_rules = self.config['validation_rules']
         
         # Check required columns
         missing_columns = set(validation_rules['required_columns']) - set(df.columns)
-        if missing_columns:
-            raise ValueError(f"Missing columns: {missing_columns}")
+        
+        # Add missing columns with default values if necessary
+        for col in missing_columns:
+            if col == 'date':
+                df['date'] = pd.Timestamp.now()
+            elif col == 'city':
+                df['city'] = 'Unknown'
+            elif col == 'sector':
+                df['sector'] = 'total'
+            elif col == 'value':
+                df['value'] = 0.0
         
         try:
             # Convert date to specified format
@@ -94,7 +109,7 @@ class RenewalModule:
             ).dt.strftime('%d/%m/%Y')
             
             # Validate numeric values
-            df['value'] = pd.to_numeric(df['value'], errors='raise')
+            df['value'] = pd.to_numeric(df['value'], errors='coerce').fillna(0)
             
             # Check value range
             value_range = validation_rules['value_range']
@@ -105,10 +120,11 @@ class RenewalModule:
             
             if not invalid_values.empty:
                 self.logger.warning(f"Found {len(invalid_values)} invalid value records")
-                df = df[
-                    (df['value'] >= value_range['min']) & 
-                    (df['value'] <= value_range['max'])
-                ]
+                df.loc[
+                    (df['value'] < value_range['min']) | 
+                    (df['value'] > value_range['max']), 
+                    'value'
+                ] = 0
         
         except Exception as e:
             self.logger.error(f"Data validation error: {e}")
@@ -116,122 +132,67 @@ class RenewalModule:
         
         return df
 
-    def calculate_renewal_metrics(self, city_df: pd.DataFrame, company_df: pd.DataFrame = None) -> pd.DataFrame:
+    def calculate_renewal_metrics(self, city_data: pd.DataFrame, company_data: pd.DataFrame = None) -> pd.DataFrame:
         """
         Calculate comprehensive renewal metrics
         
-        :param city_df: City emissions DataFrame
-        :param company_df: Optional company emissions DataFrame
+        :param city_data: City emissions DataFrame
+        :param company_data: Optional company emissions DataFrame
         :return: DataFrame with renewal metrics
         """
+        # Validate input data
+        validated_city_data = self.validate_data(city_data)
+        
+        # Optional company data validation
+        validated_company_data = None
+        if company_data is not None:
+            validated_company_data = self.validate_data(company_data)
+        
         renewal_metrics = []
         renewal_config = self.config['renewal_metrics']
-
-        # Validate and prepare data
-        city_df = self.validate_data(city_df)
         
-        # Prepare company data if provided
-        if company_df is not None:
-            company_df = self.validate_data(company_df)
-        else:
-            company_df = pd.DataFrame(columns=['city', 'sector', 'emissions_baseline'])
-
-        for city in city_df['city'].unique():
+        for city in validated_city_data['city'].unique():
             try:
-                # City-specific emissions
-                city_emissions = city_df[city_df['city'] == city]
+                # City-specific emissions data
+                city_subset = validated_city_data[validated_city_data['city'] == city]
                 
-                # Total city emissions
-                total_city_emissions = city_emissions['value'].sum()
+                # Calculate total emissions and emissions by sector
+                total_city_emissions = city_subset['value'].sum()
+                emissions_by_sector = city_subset.groupby('sector')['value'].sum()
                 
                 # Company emissions for the city (if available)
-                company_emissions = company_df[company_df['city'] == city]['emissions_baseline'].sum() if not company_df.empty else 0
+                company_emissions = 0
+                if validated_company_data is not None:
+                    city_companies = validated_company_data[validated_company_data['city'] == city]
+                    if not city_companies.empty:
+                        company_emissions = city_companies['value'].sum()
                 
-                # Trend analysis
-                total_emissions_by_sector = city_emissions.groupby('sector')['value'].sum()
+                # Calculate renewal potential
+                reduction_target = total_city_emissions * renewal_config['emissions_reduction_target']
                 
-                # Renewal potential calculation
-                renewal_potential = self._calculate_renewal_potential(
-                    total_city_emissions, 
-                    total_emissions_by_sector
-                )
-                
-                # Construct metrics dictionary
-                city_metrics = {
-                    'city': city,
-                    'total_city_emissions': total_city_emissions,
-                    'company_emissions': company_emissions,
-                    'emissions_by_sector': total_emissions_by_sector.to_dict(),
-                    'renewal_potential': renewal_potential
+                # Sector-specific reduction potential
+                sector_reduction_potential = {
+                    sector: emissions * renewal_config['emissions_reduction_target']
+                    for sector, emissions in emissions_by_sector.items()
                 }
                 
-                renewal_metrics.append(city_metrics)
+                # Compile renewal metrics
+                city_renewal_metrics = {
+                    'city': city,
+                    'total_city_emissions': total_city_emissions,
+                    'emissions_by_sector': emissions_by_sector.to_dict(),
+                    'company_emissions': company_emissions,
+                    'total_reduction_target': reduction_target,
+                    'sector_reduction_potential': sector_reduction_potential
+                }
+                
+                renewal_metrics.append(city_renewal_metrics)
             
             except Exception as city_error:
                 self.logger.error(f"Error calculating renewal metrics for {city}: {city_error}")
                 continue
         
         return pd.DataFrame(renewal_metrics)
-
-    def _calculate_renewal_potential(self, total_emissions: float, emissions_by_sector: pd.Series) -> Dict[str, float]:
-        """
-        Calculate renewal potential based on emissions
-        
-        :param total_emissions: Total city emissions
-        :param emissions_by_sector: Emissions grouped by sector
-        :return: Renewal potential metrics
-        """
-        renewal_config = self.config['renewal_metrics']
-        
-        return {
-            'total_reduction_target': total_emissions * renewal_config['emissions_reduction_target'],
-            'sector_reduction_potential': {
-                sector: emissions * renewal_config['emissions_reduction_target']
-                for sector, emissions in emissions_by_sector.items()
-            }
-        }
-
-    async def _calculate_renewal_metrics_batch(self, batch: pd.DataFrame):
-        """
-        Calculate renewal metrics for a batch of cities
-        
-        :param batch: DataFrame containing renewal metrics batch
-        """
-        async with self.transaction_semaphore:
-            try:
-                contract = self.workflow.contracts['RenewalTheoryContract']
-                
-                for _, row in batch.iterrows():
-                    try:
-                        tx_hash = await contract.functions.calculateRenewalMetrics(
-                            row['city'], 
-                            float(row['total_city_emissions']), 
-                            float(row['company_emissions'])
-                        ).transact({
-                            'from': self.workflow.w3.eth.accounts[0],
-                            'gas': 2000000
-                        })
-                        
-                        receipt = await self.workflow.w3.eth.wait_for_transaction_receipt(tx_hash)
-                        
-                        # Log detailed renewal metrics
-                        additional_data = {
-                            'city': row['city'],
-                            'total_city_emissions': row['total_city_emissions'],
-                            'company_emissions': row['company_emissions'],
-                            'renewal_potential': row.get('renewal_potential', {})
-                        }
-                        
-                        self.workflow.log_to_file('renewal_metrics_logs.json', additional_data, receipt)
-                        self.logger.info(f"Calculated renewal metrics for {row['city']}")
-                    
-                    except Exception as record_error:
-                        self.logger.error(f"Error calculating renewal metrics for record: {record_error}")
-                        continue
-            
-            except Exception as batch_error:
-                self.logger.error(f"Batch renewal metrics calculation error: {batch_error}")
-                raise
 
     async def calculate_renewal_metrics_workflow(self, city_data, company_data=None):
         """
@@ -245,37 +206,88 @@ class RenewalModule:
             if 'RenewalTheoryContract' not in self.workflow.contracts:
                 raise ValueError("RenewalTheoryContract not loaded")
             
-            # Convert to DataFrame if not already
-            if not isinstance(city_data, pd.DataFrame):
-                city_data = pd.DataFrame(city_data)
+            # Calculate renewal metrics
+            renewal_metrics = self.calculate_renewal_metrics(
+                pd.DataFrame(city_data), 
+                pd.DataFrame(company_data) if company_data is not None else None
+            )
             
-            # Optional company data
-            if company_data and not isinstance(company_data, pd.DataFrame):
-                company_data = pd.DataFrame(company_data)
+            # Get the contract instance
+            renewal_contract = self.workflow.contracts['RenewalTheoryContract']
             
-            # Calculate comprehensive renewal metrics
-            renewal_metrics = self.calculate_renewal_metrics(city_data, company_data)
-            
-            self.logger.info(f"Calculating renewal metrics for {len(renewal_metrics)} cities")
-            
-            # Batch processing
-            batch_size = self.config.get('batch_size', 100)
-            batches = [
-                renewal_metrics[i:i+batch_size] 
-                for i in range(0, len(renewal_metrics), batch_size)
-            ]
-            
-            # Process batches concurrently
-            tasks = [self._calculate_renewal_metrics_batch(batch) for batch in batches]
-            await asyncio.gather(*tasks)
-            
-            self.logger.info("Renewal metrics calculation completed")
+            # Process each city's renewal metrics
+            for _, row in renewal_metrics.iterrows():
+                try:
+                    # Prepare transaction arguments
+                    tx_hash = await renewal_contract.functions.calculateRenewalMetrics(
+                        row['city'], 
+                        float(row['total_city_emissions']), 
+                        float(row['company_emissions']),
+                        float(row['total_reduction_target'])
+                    ).transact({
+                        'from': self.workflow.w3.eth.accounts[0],
+                        'gas': 2000000
+                    })
+                    
+                    # Wait for transaction receipt
+                    receipt = await self.workflow.w3.eth.wait_for_transaction_receipt(tx_hash)
+                    
+                    # Log the transaction
+                    self.workflow.log_to_file('renewal_metrics_logs.json', row.to_dict(), receipt)
+                    
+                    self.logger.info(f"Processed renewal metrics for {row['city']}")
+                
+                except Exception as record_error:
+                    self.logger.error(f"Error processing renewal metrics for {row['city']}: {record_error}")
+                    continue
             
             return renewal_metrics
         
         except Exception as e:
             self.logger.error(f"Comprehensive renewal metrics calculation error: {e}")
             raise
+
+    def generate_renewal_report(self, renewal_metrics: pd.DataFrame) -> Dict[str, Any]:
+        """
+        Generate a comprehensive renewal report
+        
+        :param renewal_metrics: DataFrame with renewal metrics
+        :return: Summary report dictionary
+        """
+        try:
+            report = {
+                'total_cities_analyzed': len(renewal_metrics),
+                'global_total_emissions': renewal_metrics['total_city_emissions'].sum(),
+                'global_total_reduction_target': renewal_metrics['total_reduction_target'].sum(),
+                'cities_with_highest_reduction_potential': renewal_metrics.nlargest(
+                    3, 'total_reduction_target'
+                )[['city', 'total_reduction_target']].to_dict(orient='records'),
+                'sector_reduction_breakdown': self._aggregate_sector_reduction(renewal_metrics)
+            }
+            
+            self.logger.info("Generated comprehensive renewal report")
+            return report
+        
+        except Exception as e:
+            self.logger.error(f"Error generating renewal report: {e}")
+            return {}
+
+    def _aggregate_sector_reduction(self, renewal_metrics: pd.DataFrame) -> Dict[str, float]:
+        """
+        Aggregate sector reduction potential across all cities
+        
+        :param renewal_metrics: DataFrame with renewal metrics
+        :return: Dictionary of sector reduction potentials
+        """
+        sector_reduction = {}
+        
+        for _, row in renewal_metrics.iterrows():
+            for sector, reduction in row['sector_reduction_potential'].items():
+                if sector not in sector_reduction:
+                    sector_reduction[sector] = 0
+                sector_reduction[sector] += reduction
+        
+        return sector_reduction
 
 def create_renewal_module(workflow):
     """
@@ -293,3 +305,43 @@ def create_renewal_module(workflow):
         }
     }
     return RenewalModule(workflow, config=custom_config)
+
+# Example usage
+async def main():
+    # Import here to avoid circular imports
+    from blockchainworkflow import BlockchainWorkflow
+    
+    # Create workflow
+    workflow = BlockchainWorkflow()
+    
+    # Create renewal module
+    renewal_module = RenewalModule(workflow)
+    
+    # Sample city data (replace with actual data loading)
+    sample_city_data = pd.DataFrame({
+        'city': ['CityA', 'CityA', 'CityB', 'CityB'],
+        'date': ['01/01/2023', '02/01/2023', '01/01/2023', '02/01/2023'],
+        'sector': ['Energy', 'Transport', 'Energy', 'Transport'],
+        'value': [10.5, 12.3, 8.7, 9.2]
+    })
+    
+    # Sample company data (optional)
+    sample_company_data = pd.DataFrame({
+        'city': ['CityA', 'CityB'],
+        'sector': ['Energy', 'Transport'],
+        'value': [5.0, 4.5]
+    })
+    
+    # Calculate and register renewal metrics
+    renewal_metrics = await renewal_module.calculate_renewal_metrics_workflow(
+        sample_city_data, 
+        sample_company_data
+    )
+    
+    # Generate renewal report
+    report = renewal_module.generate_renewal_report(renewal_metrics)
+    print(report)
+
+if __name__ == "__main__":
+    import asyncio
+    asyncio.run(main())

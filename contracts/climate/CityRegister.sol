@@ -69,20 +69,24 @@ contract CityRegister is ERC20, Ownable {
         _;
     }
 
-    function registerCity(string memory cityName) external onlyOwner {
-        require(bytes(cityName).length > 0, "City name cannot be empty");
-        require(!cities[cityName].isRegistered, "City already registered");
+  function registerCity(
+    string memory cityName,
+    string memory date,
+    string memory sector,
+    uint256 value
+) external onlyOwner {
+    require(bytes(cityName).length > 0, "City name cannot be empty");
+    require(!cities[cityName].isRegistered, "City already registered");
 
-        City storage newCity = cities[cityName];
-        newCity.name = cityName;
-        newCity.isRegistered = true;
-        newCity.registrationDate = block.timestamp;
+    City storage newCity = cities[cityName];
+    newCity.name = cityName;
+    newCity.isRegistered = true;
+    newCity.registrationDate = block.timestamp;
 
-        registeredCityNames.push(cityName);
-        
-        emit CityRegistered(cityName, block.timestamp);
-    }
-
+    registeredCityNames.push(cityName);
+    
+    emit CityRegistered(cityName, block.timestamp);
+}
     function addSector(string memory cityName, string memory sectorName) 
         external 
         onlyOwner 

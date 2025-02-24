@@ -4,16 +4,19 @@ import numpy as np
 from datetime import datetime
 import asyncio
 from typing import List, Dict, Any
+from sklearn.linear_model import LinearRegression
 
 class HealthModule:
-    def __init__(self, workflow, config=None):
+    def __init__(self, workflow=None, config=None):
         """
         Initialize HealthModule with workflow context and configuration
         
         :param workflow: BlockchainWorkflow instance
         :param config: Configuration dictionary for module behavior
         """
+        # Store workflow instance
         self.workflow = workflow
+        
         self.config = config or self._default_config()
         
         # Setup specialized logger
@@ -120,92 +123,55 @@ class HealthModule:
 
     def calculate_health_metrics(self, df: pd.DataFrame) -> pd.DataFrame:
         """
-        Calculate comprehensive health metrics
+        Calculate comprehensive health metrics for cities
         
-        :param df: Input DataFrame
+        :param df: Input DataFrame with city emissions data
         :return: DataFrame with health metrics
         """
-        health_metrics = self.config['health_metrics']
-        health_results = []
-
-        for city in df['city'].unique():
-            city_data = df[df['city'] == city]
+        # Validate input data
+        validated_df = self.validate_data(df)
+        
+        health_metrics = []
+        
+        for city in validated_df['city'].unique():
+            city_data = validated_df[validated_df['city'] == city].copy()  # Create a copy
             
             # Basic metrics
-            metrics = {
-                'city': city,
-                'total_emissions': city_data['value'].sum() if health_metrics.get('total_emissions') else None,
-                'variance': city_data['value'].var() if health_metrics.get('variance') else None,
-                'peak_emission': city_data['value'].max() if health_metrics.get('peak_emission') else None
-            }
-
-            # Advanced trend analysis (linear regression)
-            if health_metrics.get('emission_trend') == 'linear_regression':
-                try:
-                    city_data['date_numeric'] = pd.to_datetime(city_data['date']).astype(int) // 10**9
-                    from sklearn.linear_model import LinearRegression
-                    
-                    X = city_data['date_numeric'].values.reshape(-1, 1)
-                    y = city_data['value'].values
-                    
-                    model = LinearRegression()
-                    model.fit(X, y)
-                    
-                    metrics['emission_trend_slope'] = model.coef_[0]
-                    metrics['emission_trend_intercept'] = model.intercept_
-                except Exception as trend_error:
-                    self.logger.warning(f"Trend analysis failed for {city}: {trend_error}")
-                    metrics['emission_trend_slope'] = None
-                    metrics['emission_trend_intercept'] = None
-
-            health_results.append(metrics)
-
-        return pd.DataFrame(health_results)
-
-    async def _calculate_city_health_batch(self, batch: pd.DataFrame):
-        """
-        Calculate health for a batch of cities with rate limiting
-        
-        :param batch: DataFrame containing city health data batch
-        """
-        async with self.transaction_semaphore:
-            try:
-                contract = self.workflow.contracts['CityHealthCalculator']
-                
-                for _, row in batch.iterrows():
-                    try:
-                        tx_hash = await contract.functions.calculateCityHealth(
-                            row['city'], 
-                            float(row['total_emissions'] or 0), 
-                            float(row['variance'] or 0), 
-                            float(row['peak_emission'] or 0)
-                        ).transact({
-                            'from': self.workflow.w3.eth.accounts[0],
-                            'gas': 2000000
-                        })
-                        
-                        receipt = await self.workflow.w3.eth.wait_for_transaction_receipt(tx_hash)
-                        
-                        # Log additional trend information if available
-                        additional_data = {
-                            'city': row['city'],
-                            'total_emissions': row['total_emissions'],
-                            'variance': row['variance'],
-                            'peak_emission': row['peak_emission'],
-                            'emission_trend_slope': row.get('emission_trend_slope'),
-                            'emission_trend_intercept': row.get('emission_trend_intercept')
-                        }
-                        
-                        self.workflow.log_to_file('city_health_logs.json', additional_data, receipt)
-                        self.logger.info(f"Calculated health metrics for {row['city']}")
-                    
-                    except Exception as record_error:
-                        self.logger.error(f"Error calculating health for record: {record_error}")
-                        continue
+            total_emissions = city_data['value'].sum()
+            variance = city_data['value'].var()
+            peak_emission = city_data['value'].max()
             
-            except Exception as batch_error:
-                self.logger.error(f"Batch health calculation error: {batch_error}")
-                raise
+            # Trend analysis (linear regression)
+            try:
+                # Convert dates to numeric for regression
+                city_data.loc[:, 'date_numeric'] = pd.to_datetime(city_data['date']).astype(int) // 10**9
+                
+                X = city_data['date_numeric'].values.reshape(-1, 1)
+                y = city_data['value'].values
+                
+                model = LinearRegression()
+                model.fit(X, y)
+                
+                trend_slope = model.coef_[0]
+                trend_intercept = model.intercept_
+            except Exception as trend_error:
+                self.logger.warning(f"Trend analysis failed for {city}: {trend_error}")
+                trend_slope = None
+                trend_intercept = None
+            
+            # Compile metrics
+            city_metrics = {
+                'city': city,
+                'total_emissions': total_emissions,
+                'variance': variance,
+                'peak_emission': peak_emission,
+                'trend_slope': trend_slope,
+                'trend_intercept': trend_intercept
+            }
+            
+            health_metrics.append(city_metrics)
+        
+        return pd.DataFrame(health_metrics)
 
     async def calculate_city_health(self, city_data):
         """
@@ -222,26 +188,37 @@ class HealthModule:
             if not isinstance(city_data, pd.DataFrame):
                 city_data = pd.DataFrame(city_data)
             
-            # Validate data
-            validated_data = self.validate_data(city_data)
+            # Calculate health metrics
+            health_metrics = self.calculate_health_metrics(city_data)
             
-            # Calculate comprehensive health metrics
-            health_metrics = self.calculate_health_metrics(validated_data)
+            # Get the contract instance
+            health_contract = self.workflow.contracts['CityHealthCalculator']
             
-            self.logger.info(f"Calculating health metrics for {len(health_metrics)} cities")
-            
-            # Batch processing
-            batch_size = self.config.get('batch_size', 100)
-            batches = [
-                health_metrics[i:i+batch_size] 
-                for i in range(0, len(health_metrics), batch_size)
-            ]
-            
-            # Process batches concurrently
-            tasks = [self._calculate_city_health_batch(batch) for batch in batches]
-            await asyncio.gather(*tasks)
-            
-            self.logger.info("City health calculation completed")
+            # Process each city's health metrics
+            for _, row in health_metrics.iterrows():
+                try:
+                    # Interact with contract to calculate health
+                    tx_hash = await health_contract.functions.calculateCityHealth(
+                        row['city'], 
+                        float(row['total_emissions']), 
+                        float(row['variance']), 
+                        float(row['peak_emission'])
+                    ).transact({
+                        'from': self.workflow.w3.eth.accounts[0],
+                        'gas': 2000000
+                    })
+                    
+                    # Wait for transaction receipt
+                    receipt = await self.workflow.w3.eth.wait_for_transaction_receipt(tx_hash)
+                    
+                    # Log the transaction
+                    self.workflow.log_to_file('city_health_logs.json', row.to_dict(), receipt)
+                    
+                    self.logger.info(f"Processed health metrics for {row['city']}")
+                
+                except Exception as record_error:
+                    self.logger.error(f"Error processing health metrics for {row['city']}: {record_error}")
+                    continue
             
             return health_metrics
         
@@ -262,10 +239,10 @@ class HealthModule:
                 'global_total_emissions': health_metrics['total_emissions'].sum(),
                 'global_average_emissions': health_metrics['total_emissions'].mean(),
                 'cities_with_increasing_trend': len(
-                    health_metrics[health_metrics['emission_trend_slope'] > 0]
+                    health_metrics[health_metrics['trend_slope'] > 0]
                 ),
                 'cities_with_decreasing_trend': len(
-                    health_metrics[health_metrics['emission_trend_slope'] < 0]
+                    health_metrics[health_metrics['trend_slope'] < 0]
                 ),
                 'highest_emission_city': health_metrics.loc[
                     health_metrics['total_emissions'].idxmax()
@@ -297,12 +274,33 @@ def create_health_module(workflow):
             'required_columns': ['city', 'date', 'sector', 'value'],
             'value_range': {'min': 0, 'max': 50},
             'date_format': '%d/%m/%Y'
-        },
-        'health_metrics': {
-            'total_emissions': 'sum',
-            'variance': 'var',
-            'peak_emission': 'max',
-            'emission_trend': 'linear_regression'
         }
     }
     return HealthModule(workflow, config=custom_config)
+
+# Example usage
+async def main():
+    # Create workflow
+    workflow = BlockchainWorkflow()
+    
+    # Create health module
+    health_module = HealthModule(workflow)
+    
+    # Sample data (replace with actual data loading)
+    sample_data = pd.DataFrame({
+        'city': ['CityA', 'CityA', 'CityB', 'CityB'],
+        'date': ['01/01/2023', '02/01/2023', '01/01/2023', '02/01/2023'],
+        'sector': ['Energy', 'Energy', 'Transport', 'Transport'],
+        'value': [10.5, 12.3, 8.7, 9.2]
+    })
+    
+    # Calculate and register health metrics
+    health_metrics = await health_module.calculate_city_health(sample_data)
+    
+    # Generate health report
+    report = health_module.generate_health_report(health_metrics)
+    print(report)
+
+if __name__ == "__main__":
+    import asyncio
+    asyncio.run(main())

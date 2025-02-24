@@ -75,8 +75,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -13535,8 +13534,7 @@
     }
   },
   "schemaVersion": "3.4.16",
-  "updatedAt": "2025-02-19T20:13:37.529Z",
-  "networkType": "ethereum",
+  "updatedAt": "2025-02-21T06:43:14.019Z",
   "devdoc": {
     "details": "Interface for receiving blockchain to process relayed transactions",
     "kind": "dev",

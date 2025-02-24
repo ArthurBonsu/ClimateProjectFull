@@ -156,8 +156,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -170,8 +169,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -184,8 +182,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -234,8 +231,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [
@@ -254,8 +250,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true
+      "type": "function"
     },
     {
       "inputs": [],
@@ -13764,8 +13759,7 @@
     }
   },
   "schemaVersion": "3.4.16",
-  "updatedAt": "2025-02-19T20:13:33.630Z",
-  "networkType": "ethereum",
+  "updatedAt": "2025-02-21T06:43:13.846Z",
   "devdoc": {
     "details": "Handles the registration of blockchains in the PAYS system",
     "events": {
